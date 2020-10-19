@@ -3,7 +3,6 @@ const express = require("express");
 const app = express();
 var bodyParser = require("body-parser");
 var nodemailer = require("nodemailer");
-var datetime = require('node-datetime');
 
 const fileUpload = require("express-fileupload");
 const cors = require("cors");
@@ -49,7 +48,8 @@ app.use("/", companyRoute);
 const companyTempRoute = require("./routes/company_temp");
 app.use("/", companyTempRoute);
 
-
+const departmentRoutes = require("./routes/department");
+app.use("/", departmentRoutes);
 
 
 app.get('/test', function(req ,res){
