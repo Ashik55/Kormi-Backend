@@ -11,38 +11,68 @@ router.post("/assign_deal", function (req, res) {
   let deal_code = req.body.deal_code;
   let assigned_by = req.body.assigned_by;
   let assigned_to = req.body.assigned_to;
-  let assignment_serial = req.body.assignment_serial;
 
 
-  sql =
-    "INSERT INTO deal_assignment (com_code, deal_code, assigned_by, assigned_to, assignment_serial,create_date ) VALUES ('" +
-    com_code +
-    "', '" +
-    deal_code +
-    "','" +
-    assigned_by +
-    "','" +
-    assigned_to +
-    "','" +
-    assignment_serial +
-    "','" +
-    today +
-    "')";
+  db.query(
+    "SELECT COUNT(*) FROM deal_assignment WHERE deal_code = ?",
+    [deal_code],
+    (err, result) => {
+      if (!err) {
 
-  db.query(sql, function (err, result) {
-    if (!err) {
-      res.send({
-        result: true,
-        msg: "Deal Assigned successfully",
+        var x = result[0];
+        var count = x["COUNT(*)"];
+        assignment_serial = count + 1;
+
+        sql =
+        "INSERT INTO deal_assignment (com_code, deal_code, assigned_by, assigned_to, assignment_serial,create_date ) VALUES ('" +
+        com_code +
+        "', '" +
+        deal_code +
+        "','" +
+        assigned_by +
+        "','" +
+        assigned_to +
+        "','" +
+        assignment_serial +
+        "','" +
+        today +
+        "')";
+    
+      db.query(sql, function (err, result) {
+        if (!err) {
+          res.send({
+            result: true,
+            msg: "Deal Assigned successfully",
+          });
+        } else {
+          res.send({
+            result: false,
+            msg: "Deal assign failed",
+            error: err,
+          });
+        }
       });
-    } else {
-      res.send({
-        result: false,
-        msg: "Deal assign failed",
-        error: err,
-      });
+
+
+
+
+      } else {
+        res.send({
+          result: false,
+          msg: "Sorry something went wrong",
+          error: err,
+        });
+      }
     }
-  });
+  );
+
+
+ 
+
+
+
+
+
 });
 
 
@@ -112,8 +142,9 @@ router.get("/assign_deal_list_com", (req, res) => {
 });
 
 
-// Get User Details
+// Get deal count
 router.get("/assign_deal_list_deal_code_count", (req, res) => {
+
   db.query(
     "SELECT COUNT(*) FROM deal_assignment WHERE deal_code = ?",
     [req.body.deal_code],
@@ -139,6 +170,8 @@ router.get("/assign_deal_list_deal_code_count", (req, res) => {
       }
     }
   );
+
+
 });
 
 
