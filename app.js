@@ -58,6 +58,13 @@ const DealInfoRoute = require("./routes/deal_info");
 app.use("/", DealInfoRoute);
 
 
+const DealAssignmentRoute = require("./routes/deal_assignment");
+app.use("/", DealAssignmentRoute);
+
+
+
+
+
 
 app.get('/test', function(req ,res){
     res.send('ashik '+ today);
