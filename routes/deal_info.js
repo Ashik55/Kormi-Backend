@@ -131,6 +131,9 @@ router.put("/deal_update", function (req, res) {
   let deal_type = req.body.deal_type;
   let deal_code = req.body.deal_code;
 
+  
+
+
   var sql =
     "UPDATE deal_info SET deal_name = '" +
     deal_name +
@@ -144,6 +147,8 @@ router.put("/deal_update", function (req, res) {
     deal_progress +
     "',deal_type = '" +
     deal_type +
+    "',update_date = '" +
+    today +
     "' WHERE deal_code = '" +
     deal_code +
     "'";
@@ -171,6 +176,8 @@ router.put("/deal_progress_update", function (req, res) {
   var sql =
     "UPDATE deal_info SET deal_progress = '" +
     deal_progress +
+    "',update_date = '" +
+    today +
     "' WHERE deal_code = '" +
     deal_code +
     "'";
@@ -198,6 +205,8 @@ router.put("/deal_stage_update", function (req, res) {
     var sql =
       "UPDATE deal_info SET deal_stage = '" +
       deal_stage +
+      "',update_date = '" +
+      today +
       "' WHERE deal_code = '" +
       deal_code +
       "'";
