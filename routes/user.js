@@ -61,6 +61,7 @@ router.post("/registration", function (req, res) {
           res.send({
             result: true,
             msg: "Registration success",
+            user_id: user_id
           });
         } else {
           res.send({
@@ -81,10 +82,11 @@ router.post("/registration", function (req, res) {
 });
 
 // Get User Details
-router.get("/user_details/:user_id", (req, res) => {
+router.get("/user_details", (req, res) => {
+
   db.query(
     "SELECT * FROM user_info WHERE user_id = ?",
-    [req.params.user_id],
+    [req.body.user_id],
     (err, rows, fields) => {
       if (!err) {
         res.send({
@@ -104,10 +106,10 @@ router.get("/user_details/:user_id", (req, res) => {
 });
 
 // Get User Details using email
-router.get("/user_details_email/:user_email", (req, res) => {
+router.get("/user_details_email", (req, res) => {
   db.query(
     "SELECT * FROM user_info WHERE user_email = ?",
-    [req.params.user_email],
+    [req.body.user_email],
     (err, rows, fields) => {
       if (!err) {
         res.send({
