@@ -13,7 +13,7 @@ router.post("/registration", function (req, res) {
   let user_id = helper.makeid(25);
 
   db.query(
-    'SELECT user_email FROM user_info WHERE user_email ="' + user_email + '"',
+    'SELECT app_key FROM user_info WHERE app_key ="' + app_key + '"',
     function (err, result) {
       if (err) throw err;
       console.log(result);
@@ -55,11 +55,29 @@ router.post("/registration", function (req, res) {
 
         db.query(sql, function (err, result) {
           if (!err) {
-            res.send({
-              result: true,
-              msg: "Registration success",
-              user_id: user_id,
-            });
+            db.query(
+              "SELECT * FROM user_info WHERE app_key = ? ",
+              [app_key],
+              (err, rows, fields) => {
+                if (!err) {
+                  if (rows.length === 0) {
+                    res.send({
+                      result: false,
+                      msg: "App key already exist but no data found",
+                      data: [],
+                    });
+                  } else {
+                    res.send({
+                      result: true,
+                      msg: "Registration success",
+                      data: rows[0],
+                    });
+                  }
+                } else {
+                  console.log(err);
+                }
+              }
+            );
           } else {
             res.send({
               result: false,
@@ -69,11 +87,31 @@ router.post("/registration", function (req, res) {
           }
         });
       } else {
-        // Email exist
-        res.send({
-          result: false,
-          error: "Email already used",
-        });
+        // App Key exist send user Data
+
+        db.query(
+          "SELECT * FROM user_info WHERE app_key = ? ",
+          [app_key],
+          (err, rows, fields) => {
+            if (!err) {
+              if (rows.length === 0) {
+                res.send({
+                  result: false,
+                  msg: "App key already exist but no data found",
+                  data: [],
+                });
+              } else {
+                res.send({
+                  result: true,
+                  msg: "welcome for re-login",
+                  data: rows[0],
+                });
+              }
+            } else {
+              console.log(err);
+            }
+          }
+        );
       }
     }
   );
@@ -329,7 +367,5 @@ router.put("/user_office_update", function (req, res) {
     }
   });
 });
-
-
 
 module.exports = router;

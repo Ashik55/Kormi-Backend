@@ -9,7 +9,7 @@ let helper = require("../Helper/helper");
 
 // Create New Department
 router.post("/create_dept", function (req, res) {
-  let dept_name = req.body.com_name;
+  let dept_name = req.body.dept_name;
   let dept_code = helper.makeid(15);
 
   sql =
