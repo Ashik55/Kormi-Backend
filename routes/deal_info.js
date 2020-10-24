@@ -5,7 +5,7 @@ const today = new Date().toISOString().slice(0, 19).replace("T", " ");
 const empty = "";
 let helper = require("../Helper/helper");
 
-// Registration new User
+// Registration new Deal
 router.post("/create_deal", function (req, res) {
   let deal_name = req.body.deal_name;
   let deal_amount = req.body.deal_amount;
@@ -14,6 +14,7 @@ router.post("/create_deal", function (req, res) {
   let deal_progress = req.body.deal_progress;
   let deal_type = req.body.deal_type;
   let deal_owner = req.body.deal_owner;
+  let com_code = req.body.com_code;
 
   let deal_code = helper.makeid(15);
 
@@ -42,9 +43,35 @@ router.post("/create_deal", function (req, res) {
 
   db.query(sql, function (err, result) {
     if (!err) {
-      res.send({
-        result: true,
-        msg: "Deal created successfully",
+      sql2 =
+        "INSERT INTO deal_assignment (com_code, deal_code, assigned_by, assigned_to, assignment_serial,create_date ) VALUES ('" +
+        com_code +
+        "', '" +
+        deal_code +
+        "','" +
+        deal_owner +
+        "','" +
+        deal_owner +
+        "','" +
+        "1" +
+        "','" +
+        today +
+        "')";
+
+      db.query(sql2, function (err, result) {
+        if (!err) {
+          res.send({
+            result: true,
+            deal_code: deal_code,
+            msg: "Deal Assigned successfully",
+          });
+        } else {
+          res.send({
+            result: false,
+            msg: "Deal assign failed",
+            error: err,
+          });
+        }
       });
     } else {
       res.send({
@@ -131,9 +158,6 @@ router.put("/deal_update", function (req, res) {
   let deal_type = req.body.deal_type;
   let deal_code = req.body.deal_code;
 
-  
-
-
   var sql =
     "UPDATE deal_info SET deal_name = '" +
     deal_name +
@@ -168,7 +192,6 @@ router.put("/deal_update", function (req, res) {
   });
 });
 
-
 // Update Deal Progresss
 router.put("/deal_progress_update", function (req, res) {
   let deal_progress = req.body.deal_progress;
@@ -197,46 +220,32 @@ router.put("/deal_progress_update", function (req, res) {
   });
 });
 
-  
 // Update Deal stage
 router.put("/deal_stage_update", function (req, res) {
-    let deal_stage = req.body.deal_stage;
-    let deal_code = req.body.deal_code;
-    var sql =
-      "UPDATE deal_info SET deal_stage = '" +
-      deal_stage +
-      "',update_date = '" +
-      today +
-      "' WHERE deal_code = '" +
-      deal_code +
-      "'";
-    db.query(sql, function (err, result) {
-      if (!err) {
-        res.send({
-          result: true,
-          msg: "Deal Stage Updated Successfully",
-        });
-      } else {
-        res.send({
-          result: false,
-          msg: "Deal Stage Update Failed",
-          error: err,
-        });
-      }
-    });
+  let deal_stage = req.body.deal_stage;
+  let deal_code = req.body.deal_code;
+  var sql =
+    "UPDATE deal_info SET deal_stage = '" +
+    deal_stage +
+    "',update_date = '" +
+    today +
+    "' WHERE deal_code = '" +
+    deal_code +
+    "'";
+  db.query(sql, function (err, result) {
+    if (!err) {
+      res.send({
+        result: true,
+        msg: "Deal Stage Updated Successfully",
+      });
+    } else {
+      res.send({
+        result: false,
+        msg: "Deal Stage Update Failed",
+        error: err,
+      });
+    }
   });
-  
-
-
-
-
-
-
-
-
-
-
-
-
+});
 
 module.exports = router;

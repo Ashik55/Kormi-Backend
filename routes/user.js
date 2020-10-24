@@ -5,6 +5,8 @@ let helper = require("../Helper/helper");
 const today = new Date().toISOString().slice(0, 19).replace("T", " ");
 const empty = "";
 
+
+
 // Registration new User
 router.post("/registration", function (req, res) {
   let user_name = req.body.user_name;
@@ -118,7 +120,7 @@ router.post("/registration", function (req, res) {
 });
 
 // Get User Details
-router.get("/user_details", (req, res) => {
+router.post("/user_details", (req, res) => {
   db.query(
     "SELECT * FROM user_info WHERE user_id = ?",
     [req.body.user_id],
@@ -127,7 +129,7 @@ router.get("/user_details", (req, res) => {
         res.send({
           result: true,
           msg: "User Details Found",
-          data: rows,
+          data: rows[0],
         });
       } else {
         res.send({
@@ -140,8 +142,9 @@ router.get("/user_details", (req, res) => {
   );
 });
 
+
 // Get User Details using email
-router.get("/user_details_email", (req, res) => {
+router.post("/user_details_email", (req, res) => {
   db.query(
     "SELECT * FROM user_info WHERE user_email = ?",
     [req.body.user_email],
@@ -162,6 +165,31 @@ router.get("/user_details_email", (req, res) => {
     }
   );
 });
+
+
+// Get User of same companies
+router.post("/user_details_samecompany", (req, res) => {
+  db.query(
+    "SELECT * FROM user_info WHERE com_code = ?",
+    [req.body.com_code],
+    (err, rows, fields) => {
+      if (!err) {
+        res.send({
+          result: true,
+          msg: "User Details Found",
+          data: rows,
+        });
+      } else {
+        res.send({
+          result: false,
+          msg: "Sorry something went wrong",
+          error: err,
+        });
+      }
+    }
+  );
+});
+
 
 // Get All Users
 router.get("/users", (req, res) => {

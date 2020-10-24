@@ -76,7 +76,7 @@ router.post("/assign_deal", function (req, res) {
 });
 
 
-// Get All Users
+// Get All Deals
 router.get("/all_assigned_deals", (req, res) => {
   db.query("SELECT * FROM deal_assignment", (err, rows, fields) => {
     if (!err) {
@@ -95,7 +95,8 @@ router.get("/all_assigned_deals", (req, res) => {
   });
 });
 
-// Get User Details
+
+// Get User of same Deal
 router.get("/assign_deal_list_deal_code", (req, res) => {
   db.query(
     "SELECT * FROM deal_assignment WHERE deal_code = ?",
@@ -118,7 +119,37 @@ router.get("/assign_deal_list_deal_code", (req, res) => {
   );
 });
 
-// Get User Details
+// Get all assigned deals
+router.get("/assigned_deals_list", (req, res) => {
+  db.query(
+    "SELECT * FROM deal_assignment WHERE assigned_to = ?",
+    [req.body.assigned_to],
+    (err, rows, fields) => {
+      if (!err) {
+        res.send({
+          result: true,
+          msg: "Deal Found",
+          data: rows,
+        });
+      } else {
+        res.send({
+          result: false,
+          msg: "Sorry something went wrong",
+          error: err,
+        });
+      }
+    }
+  );
+});
+
+
+
+
+
+
+
+
+// Get all deals of a company 
 router.get("/assign_deal_list_com", (req, res) => {
   db.query(
     "SELECT * FROM deal_assignment WHERE com_code = ?",
