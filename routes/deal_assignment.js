@@ -128,6 +128,9 @@ router.post("/assign_deal_list_deal_code", (req, res) => {
 
 // Get all assigned deals
 router.post("/assigned_deals_list", (req, res) => {
+  //Inner join Examples
+  // https://www.mysqltutorial.org/mysql-inner-join.aspx/
+
   db.query(
     "SELECT * FROM deal_assignment INNER JOIN deal_info USING (deal_code) WHERE assigned_to = ?",
     [req.body.assigned_to],
