@@ -168,7 +168,7 @@ router.post("/user_details_email", (req, res) => {
 
 
 // Get User of same companies
-router.post("/user_details_samecompany", (req, res) => {
+router.post("/userlist_samecom", (req, res) => {
   db.query(
     "SELECT * FROM user_info WHERE com_code = ?",
     [req.body.com_code],

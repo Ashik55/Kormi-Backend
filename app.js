@@ -59,10 +59,11 @@ app.use("/", LocationHistoryRoutes);
 const DealInfoRoute = require("./routes/deal_info");
 app.use("/", DealInfoRoute);
 
-
 const DealAssignmentRoute = require("./routes/deal_assignment");
 app.use("/", DealAssignmentRoute);
 
+const tasksRouter = require("./routes/tasks");
+app.use("/", tasksRouter);
 
 
 
