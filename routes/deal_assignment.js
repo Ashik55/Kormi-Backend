@@ -103,28 +103,7 @@ router.post("/assign_deal_list_deal_code", (req, res) => {
   );
 });
 
-// // Get all assigned deals
-// router.post("/assigned_deals_list", (req, res) => {
-//   db.query(
-//     "SELECT * FROM deal_assignment WHERE assigned_to = ?",
-//     [req.body.assigned_to],
-//     (err, rows, fields) => {
-//       if (!err) {
-//         res.send({
-//           result: true,
-//           msg: "Deal Found",
-//           data: rows,
-//         });
-//       } else {
-//         res.send({
-//           result: false,
-//           msg: "Sorry something went wrong",
-//           error: err,
-//         });
-//       }
-//     }
-//   );
-// });
+
 
 // Get all assigned deals
 router.post("/assigned_deals_list", (req, res) => {
@@ -132,7 +111,7 @@ router.post("/assigned_deals_list", (req, res) => {
   // https://www.mysqltutorial.org/mysql-inner-join.aspx/
 
   db.query(
-    "SELECT * FROM deal_assignment INNER JOIN deal_info USING (deal_code) WHERE assigned_to = ?",
+    "SELECT * FROM deal_assignment INNER JOIN deal_info USING (deal_code) WHERE assigned_to = ? ",
     [req.body.assigned_to],
     (err, rows, fields) => {
       if (!err) {

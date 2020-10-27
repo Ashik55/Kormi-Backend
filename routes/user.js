@@ -170,8 +170,8 @@ router.post("/user_details_email", (req, res) => {
 // Get User of same companies
 router.post("/userlist_samecom", (req, res) => {
   db.query(
-    "SELECT * FROM user_info WHERE com_code = ?",
-    [req.body.com_code],
+    "SELECT * FROM user_info WHERE com_code = ? AND NOT (user_id = ?)",
+    [req.body.com_code, req.body.user_id],
     (err, rows, fields) => {
       if (!err) {
         res.send({

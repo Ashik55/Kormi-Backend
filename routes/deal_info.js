@@ -248,4 +248,34 @@ router.put("/deal_stage_update", function (req, res) {
   });
 });
 
+
+
+// Get all assigned deals
+router.post("/mydeal_list", (req, res) => {
+  //Inner join Examples
+  // https://www.mysqltutorial.org/mysql-inner-join.aspx/
+  db.query(
+    "SELECT * FROM deal_assignment INNER JOIN deal_info USING (deal_code) WHERE assigned_to = ?",
+    [req.body.user_id],
+    (err, rows, fields) => {
+      if (!err) {
+        res.send({
+          result: true,
+          msg: "Deals Found",
+          data: rows,
+        });
+      } else {
+        res.send({
+          result: false,
+          msg: "No data found",
+          error: err,
+        });
+      }
+    }
+  );
+});
+
+
+
+
 module.exports = router;
