@@ -12,6 +12,7 @@ router.post("/create_task", function (req, res) {
   let task_date = req.body.task_date;
   let queue_code = req.body.queue_code;
   let task_owner = req.body.task_owner;
+  let link_name = req.body.link_name;
   let task_code = helper.makeid(15);
 
   sql =
@@ -38,12 +39,14 @@ router.post("/create_task", function (req, res) {
   db.query(sql, function (err, result) {
     if (!err) {
       sql2 =
-        "INSERT INTO tasks_details (task_code, link_code, link_type,create_date,update_date ) VALUES ('" +
+        "INSERT INTO tasks_details (task_code, link_code, link_type,link_name,create_date,update_date ) VALUES ('" +
         task_code +
         "', '" +
         task_owner +
         "','" +
         "owner" +
+        "','" +
+        link_name +
         "','" +
         today +
         "','" +
@@ -120,7 +123,7 @@ router.post("/task_list", (req, res) => {
 });
 
 // Get all assigned deals
-router.post("/task_user_list", (req, res) => {
+router.post("/tasks_user_list", (req, res) => {
   //Inner join Examples
   // https://www.mysqltutorial.org/mysql-inner-join.aspx/
   db.query(
@@ -259,14 +262,17 @@ router.post("/task_details_add", function (req, res) {
   let task_code = req.body.task_code;
   let link_code = req.body.link_code;
   let link_type = req.body.link_type;
+  let link_name = req.body.link_name;
 
   sql =
-    "INSERT INTO tasks_details (task_code, link_code, link_type,create_date,update_date ) VALUES ('" +
+    "INSERT INTO tasks_details (task_code, link_code, link_type, link_name, create_date,update_date ) VALUES ('" +
     task_code +
     "', '" +
     link_code +
     "','" +
     link_type +
+    "','" +
+    link_name +
     "','" +
     today +
     "','" +
