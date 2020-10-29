@@ -65,7 +65,8 @@ app.use("/", DealAssignmentRoute);
 const tasksRouter = require("./routes/tasks");
 app.use("/", tasksRouter);
 
-
+const attendanceRouter = require("./routes/attendance");
+app.use("/", attendanceRouter);
 
 
 
