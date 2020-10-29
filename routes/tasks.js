@@ -133,7 +133,7 @@ router.post("/upcoming_task", (req, res) => {
   console.log(date);
 
   db.query(
-    "SELECT * FROM tasks INNER JOIN tasks_details USING (task_code) WHERE link_code = ? AND task_date >= ? ORDER BY task_date LIMIT 3",
+    "SELECT * FROM tasks INNER JOIN tasks_details USING (task_code) WHERE link_code = ? AND task_date >= ? ORDER BY task_date LIMIT 2",
     [req.body.link_code, date],
     (err, rows, fields) => {
       if (!err) {
