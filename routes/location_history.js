@@ -62,12 +62,9 @@ router.get("/location_histories", (req, res) => {
 // Get User Details
 router.post("/location_list", (req, res) => {
 
-  var date = helper.formatDate(new Date()) ;
-  console.log(date);
-    
   db.query(
-    "SELECT * FROM location_history WHERE user_id = ? AND create_date >= ?",
-    [req.body.user_id, date],
+    "SELECT * FROM location_history WHERE user_id = ? AND DATE(create_date) = ?",
+    [req.body.user_id, req.body.date],
     (err, rows, fields) => {
       if (!err) {
         res.send({
