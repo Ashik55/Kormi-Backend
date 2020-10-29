@@ -122,6 +122,37 @@ router.post("/task_list", (req, res) => {
   );
 });
 
+
+
+// Get all assigned deals
+router.post("/upcoming_task", (req, res) => {
+  //Inner join Examples
+  // https://www.mysqltutorial.org/mysql-inner-join.aspx/
+
+  var date = helper.formatDate(new Date());
+  console.log(date);
+
+  db.query(
+    "SELECT * FROM tasks INNER JOIN tasks_details USING (task_code) WHERE link_code = ? AND task_date >= ? ORDER BY task_date LIMIT 3",
+    [req.body.link_code, date],
+    (err, rows, fields) => {
+      if (!err) {
+        res.send({
+          result: true,
+          msg: "Tasks Found",
+          data: rows,
+        });
+      } else {
+        res.send({
+          result: false,
+          msg: "No data found",
+          error: err,
+        });
+      }
+    }
+  );
+});
+
 // Get all assigned deals
 router.post("/tasks_user_list", (req, res) => {
   //Inner join Examples
@@ -235,7 +266,7 @@ router.delete("/delete_task", function (req, res) {
 
   db.query(mQuery, function (err, result) {
     if (!err) {
-      if (result["affectedRows"] > 0 ) {
+      if (result["affectedRows"] > 0) {
         res.send({
           result: true,
           msg: "Task deleted successfully",
@@ -293,9 +324,5 @@ router.post("/task_details_add", function (req, res) {
     }
   });
 });
-
-
-
-
 
 module.exports = router;

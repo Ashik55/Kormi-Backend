@@ -62,7 +62,7 @@ router.get("/location_histories", (req, res) => {
 // Get User Details
 router.post("/location_list", (req, res) => {
 
-  var date = formatDate(new Date()) ;
+  var date = helper.formatDate(new Date()) ;
   console.log(date);
     
   db.query(
@@ -89,18 +89,6 @@ router.post("/location_list", (req, res) => {
 
 
 
-function formatDate(date) {
-  var d = new Date(date),
-      month = '' + (d.getMonth() + 1),
-      day = '' + d.getDate(),
-      year = d.getFullYear();
 
-  if (month.length < 2) 
-      month = '0' + month;
-  if (day.length < 2) 
-      day = '0' + day;
-
-  return [year, month, day].join('-');
-}
 
 module.exports = router;
