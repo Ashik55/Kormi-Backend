@@ -1,0 +1,1769 @@
+{
+	"info": {
+		"_postman_id": "ed9b2492-c810-4355-a927-fccdab173fbf",
+		"name": "Kormi-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User Info",
+			"item": [
+				{
+					"name": "All Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://192.168.1.102:3001/users",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"102"
+							],
+							"port": "3001",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Registration",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "user_name",
+									"value": "Ashikur",
+									"type": "text"
+								},
+								{
+									"key": "app_key",
+									"value": "16",
+									"type": "text"
+								},
+								{
+									"key": "user_email",
+									"value": "as.cse.developer@gmail.com",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.1.102:3001/registration",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"102"
+							],
+							"port": "3001",
+							"path": [
+								"registration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Name Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "user_name",
+									"value": "Ashiqq",
+									"type": "text"
+								},
+								{
+									"key": "user_id",
+									"value": "7UBaXvoHNgMP4Gf1qugPhWIta",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.1.102:3001/user_name_update",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"102"
+							],
+							"port": "3001",
+							"path": [
+								"user_name_update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Company Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "com_code",
+									"value": "521511fff",
+									"type": "text"
+								},
+								{
+									"key": "com_name",
+									"value": "test Company",
+									"type": "text"
+								},
+								{
+									"key": "user_id",
+									"value": "7UBaXvoHNgMP4Gf1qugPhWIta",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.1.102:3001/user_com_update",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"102"
+							],
+							"port": "3001",
+							"path": [
+								"user_com_update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Department Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "dept_code",
+									"value": "deptcode 41125",
+									"type": "text"
+								},
+								{
+									"key": "dept_name",
+									"value": "Test Department",
+									"type": "text"
+								},
+								{
+									"key": "user_id",
+									"value": "7UBaXvoHNgMP4Gf1qugPhWIta",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.1.102:3001/user_dept_update",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"102"
+							],
+							"port": "3001",
+							"path": [
+								"user_dept_update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Home Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "address_home",
+									"value": "mirpur 10",
+									"type": "text"
+								},
+								{
+									"key": "home_latlong",
+									"value": "sample lat long",
+									"type": "text"
+								},
+								{
+									"key": "user_id",
+									"value": "7UBaXvoHNgMP4Gf1qugPhWIta",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.1.102:3001/user_home_update",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"102"
+							],
+							"port": "3001",
+							"path": [
+								"user_home_update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Number Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "user_number",
+									"value": "+8801631695645",
+									"type": "text"
+								},
+								{
+									"key": "user_id",
+									"value": "7UBaXvoHNgMP4Gf1qugPhWIta",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.1.102:3001/user_number_update",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"102"
+							],
+							"port": "3001",
+							"path": [
+								"user_number_update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Details with user_id",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "user_id",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.1.102:3001/user_details",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"102"
+							],
+							"port": "3001",
+							"path": [
+								"user_details"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Details with Email",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "user_email",
+									"value": "ashi.cse.developer@gmail.com",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.1.102:3001/user_details_email",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"102"
+							],
+							"port": "3001",
+							"path": [
+								"user_details_email"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User list same company",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "com_code",
+									"value": "p2NkZmSFn6vY8ng",
+									"type": "text"
+								},
+								{
+									"key": "user_id",
+									"value": "SG3tedEg0DinvrAlEGBGFlT9Y",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.1.102:3001/userlist_samecom",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"102"
+							],
+							"port": "3001",
+							"path": [
+								"userlist_samecom"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Company Temp",
+			"item": [
+				{
+					"name": "Create Temp Company",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "com_name",
+									"value": "Di System",
+									"type": "text"
+								},
+								{
+									"key": "com_address",
+									"value": "Mirpur 10",
+									"type": "text"
+								},
+								{
+									"key": "com_latlong",
+									"value": "5113131, 32132131",
+									"type": "text"
+								},
+								{
+									"key": "user_ref_id",
+									"value": "7UBaXvoHNgMP4Gf1qugPhWIta",
+									"type": "text"
+								},
+								{
+									"key": "com_mobile",
+									"value": "01631695645",
+									"type": "text"
+								},
+								{
+									"key": "com_email",
+									"value": "disystem@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "com_size",
+									"value": "50",
+									"type": "text"
+								},
+								{
+									"key": "com_type",
+									"value": "software firm",
+									"type": "text"
+								},
+								{
+									"key": "com_contact_person",
+									"value": "sifaat",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.1.102:3001/create_company_temp",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"102"
+							],
+							"port": "3001",
+							"path": [
+								"create_company_temp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Temp company list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://192.168.1.102:3001/temp_companies",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"102"
+							],
+							"port": "3001",
+							"path": [
+								"temp_companies"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Company Central",
+			"item": [
+				{
+					"name": "company create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "com_name",
+									"value": "Hatil",
+									"type": "text"
+								},
+								{
+									"key": "com_address",
+									"value": "Mirpur Kajipara",
+									"type": "text"
+								},
+								{
+									"key": "com_latlong",
+									"value": "23.797561, 90.372828",
+									"type": "text"
+								},
+								{
+									"key": "com_mobile",
+									"value": "01652562126",
+									"type": "text"
+								},
+								{
+									"key": "com_email",
+									"value": "hatil@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "com_size",
+									"value": "50",
+									"type": "text"
+								},
+								{
+									"key": "com_type",
+									"value": "Furniture",
+									"type": "text"
+								},
+								{
+									"key": "com_contact_person",
+									"value": "Bijoy",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.1.102:3001/create_company_central",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"102"
+							],
+							"port": "3001",
+							"path": [
+								"create_company_central"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Central company list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://192.168.88.252:3001/central_companies",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"88",
+								"252"
+							],
+							"port": "3001",
+							"path": [
+								"central_companies"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Department",
+			"item": [
+				{
+					"name": "Create Department",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "dept_name",
+									"value": "Managing Director",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.1.102:3001/create_dept",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"102"
+							],
+							"port": "3001",
+							"path": [
+								"create_dept"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Department list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://192.168.1.102:3001/all_dept",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"102"
+							],
+							"port": "3001",
+							"path": [
+								"all_dept"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Location History",
+			"item": [
+				{
+					"name": "Location insert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "com_code",
+									"value": "abcxd",
+									"type": "text"
+								},
+								{
+									"key": "user_id",
+									"value": "srtjtrhrg",
+									"type": "text"
+								},
+								{
+									"key": "user_latlong",
+									"value": "6565161651,6516516516",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.1.102:3001/location_history_insert",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"102"
+							],
+							"port": "3001",
+							"path": [
+								"location_history_insert"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All locations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://192.168.1.102:3001/location_histories",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"102"
+							],
+							"port": "3001",
+							"path": [
+								"location_histories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Location List",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "user_id",
+									"value": "SG3tedEg0DinvrAlEGBGFlT9Y",
+									"type": "text"
+								},
+								{
+									"key": "date",
+									"value": "2020-10-29",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.1.102:3001/location_list",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"102"
+							],
+							"port": "3001",
+							"path": [
+								"location_list"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Deals",
+			"item": [
+				{
+					"name": "Create Deal",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "deal_name",
+									"value": "abcd",
+									"type": "text"
+								},
+								{
+									"key": "deal_amount",
+									"value": "200",
+									"type": "text"
+								},
+								{
+									"key": "deal_stage",
+									"value": "pending",
+									"type": "text"
+								},
+								{
+									"key": "deal_close_date",
+									"value": "2020-10-20 09:06:40",
+									"type": "text"
+								},
+								{
+									"key": "deal_progress",
+									"value": "dfhkjfbkjf",
+									"type": "text"
+								},
+								{
+									"key": "deal_type",
+									"value": "rgrgr",
+									"type": "text"
+								},
+								{
+									"key": "deal_owner",
+									"value": "ab",
+									"type": "text"
+								},
+								{
+									"key": "com_code",
+									"value": "com2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.1.102:3001/create_deal",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"102"
+							],
+							"port": "3001",
+							"path": [
+								"create_deal"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Deals",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://192.168.1.102:3001/all_deals",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"102"
+							],
+							"port": "3001",
+							"path": [
+								"all_deals"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deal Details ",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "deal_code",
+									"value": "eJRADFk0wmtJ5Ai",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.1.102:3001/deal_details",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"102"
+							],
+							"port": "3001",
+							"path": [
+								"deal_details"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deal List",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "deal_owner",
+									"value": "ab",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.1.102:3001/deal_list",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"102"
+							],
+							"port": "3001",
+							"path": [
+								"deal_list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deal Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "deal_code",
+									"value": "eJRADFk0wmtJ5Ai",
+									"type": "text"
+								},
+								{
+									"key": "deal_name",
+									"value": "dddd",
+									"type": "text"
+								},
+								{
+									"key": "deal_amount",
+									"value": "100",
+									"type": "text"
+								},
+								{
+									"key": "deal_stage",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "deal_close_date",
+									"value": "2020-10-20 09:06:40",
+									"type": "text"
+								},
+								{
+									"key": "deal_progress",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "deal_type",
+									"value": "test",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.1.102:3001/deal_update",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"102"
+							],
+							"port": "3001",
+							"path": [
+								"deal_update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deal Progress Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "deal_progress",
+									"value": "50",
+									"type": "text"
+								},
+								{
+									"key": "deal_code",
+									"value": "eJRADFk0wmtJ5Ai",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.1.102:3001/deal_progress_update",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"102"
+							],
+							"port": "3001",
+							"path": [
+								"deal_progress_update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deal Stage Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "deal_code",
+									"value": "eJRADFk0wmtJ5Ai",
+									"type": "text"
+								},
+								{
+									"key": "deal_stage",
+									"value": "init stage",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.1.102:3001/deal_stage_update",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"102"
+							],
+							"port": "3001",
+							"path": [
+								"deal_stage_update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "My Deals",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "user_id",
+									"value": "SG3tedEg0DinvrAlEGBGFlT9Y",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.1.102:3001/mydeal_list",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"102"
+							],
+							"port": "3001",
+							"path": [
+								"mydeal_list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "My deal List",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "user_id",
+									"value": "SG3tedEg0DinvrAlEGBGFlT9Y",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.1.102:3001/mydeal_list",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"102"
+							],
+							"port": "3001",
+							"path": [
+								"mydeal_list"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Deal Assignment",
+			"item": [
+				{
+					"name": "Assign Deal",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "com_code",
+									"value": "ab",
+									"type": "text"
+								},
+								{
+									"key": "deal_code",
+									"value": "6",
+									"type": "text"
+								},
+								{
+									"key": "assigned_by",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "assigned_to",
+									"value": "somrat",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.1.102:3001/assign_deal",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"102"
+							],
+							"port": "3001",
+							"path": [
+								"assign_deal"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Deals in Assignd Table",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://192.168.1.102:3001/all_assigned_deals",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"102"
+							],
+							"port": "3001",
+							"path": [
+								"all_assigned_deals"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deal List with Deal code",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "deal_code",
+									"value": "6",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.1.102:3001/assign_deal_list_deal_code",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"102"
+							],
+							"port": "3001",
+							"path": [
+								"assign_deal_list_deal_code"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deal List with Com code",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "com_code",
+									"value": "hatil",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.1.102:3001/assign_deal_list_com",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"102"
+							],
+							"port": "3001",
+							"path": [
+								"assign_deal_list_com"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Row Count with deal code",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "deal_code",
+									"value": "50",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.1.102:3001/assign_deal_list_deal_code_count",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"102"
+							],
+							"port": "3001",
+							"path": [
+								"assign_deal_list_deal_code_count"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Task",
+			"item": [
+				{
+					"name": "Create Task",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "task_title",
+									"value": "test task1",
+									"type": "text"
+								},
+								{
+									"key": "task_type",
+									"value": "todo",
+									"type": "text"
+								},
+								{
+									"key": "task_date",
+									"value": "2020-10-20 09:06:40",
+									"type": "text"
+								},
+								{
+									"key": "queue_code",
+									"value": "q1",
+									"type": "text"
+								},
+								{
+									"key": "task_owner",
+									"value": "RE3kurIHcwQW8ukofbd5tHSNw",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.1.102:3001/create_task",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"102"
+							],
+							"port": "3001",
+							"path": [
+								"create_task"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Task Details Add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "task_code",
+									"value": "1dwPA0ALJjKJSrI",
+									"type": "text"
+								},
+								{
+									"key": "link_code",
+									"value": "aafUDIDF1e8F5mR1k2oKtn4uH",
+									"type": "text"
+								},
+								{
+									"key": "link_type",
+									"value": "user",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.1.102:3001/task_details_add",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"102"
+							],
+							"port": "3001",
+							"path": [
+								"task_details_add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Task Status update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "task_code",
+									"value": "1dwPA0ALJjKJSrI",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "ongoing",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.1.102:3001/task_status_update",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"102"
+							],
+							"port": "3001",
+							"path": [
+								"task_status_update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All tasks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://192.168.1.102:3001/tasks",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"102"
+							],
+							"port": "3001",
+							"path": [
+								"tasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Task's User List & com list",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "task_code",
+									"value": "lKsGFt4FtcKz1mY",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.1.102:3001/tasks_user_list",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"102"
+							],
+							"port": "3001",
+							"path": [
+								"tasks_user_list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Task list usnig Link code",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "link_code",
+									"value": "RE3kurIHcwQW8ukofbd5tHSNw",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.1.102:3001/task_list",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"102"
+							],
+							"port": "3001",
+							"path": [
+								"task_list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Task",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "task_code",
+									"value": "testc2",
+									"type": "text"
+								},
+								{
+									"key": "task_owner",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.1.102:3001/delete_task",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"102"
+							],
+							"port": "3001",
+							"path": [
+								"delete_task"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upcoming task 2 item",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "link_code",
+									"value": "RE3kurIHcwQW8ukofbd5tHSNw",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.1.102:3001/upcoming_task",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"102"
+							],
+							"port": "3001",
+							"path": [
+								"upcoming_task"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Attendance",
+			"item": [
+				{
+					"name": "Attendance Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "user_id",
+									"value": "a1",
+									"type": "text"
+								},
+								{
+									"key": "out_time",
+									"value": "2020-10-30 09:06:40",
+									"type": "text"
+								},
+								{
+									"key": "out_loc",
+									"value": "jhbjbn",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.1.102:3001/attendance_update",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"1",
+								"102"
+							],
+							"port": "3001",
+							"path": [
+								"attendance_update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Attendance List",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "user_id",
+									"value": "SG3tedEg0DinvrAlEGBGFlT9Y",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.88.252:3001/get_attendance",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"88",
+								"252"
+							],
+							"port": "3001",
+							"path": [
+								"get_attendance"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Attendance Insert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "user_id",
+									"value": "a20",
+									"type": "text"
+								},
+								{
+									"key": "com_code",
+									"value": "c1",
+									"type": "text"
+								},
+								{
+									"key": "in_time",
+									"value": "2020-10-29 09:06:40",
+									"type": "text"
+								},
+								{
+									"key": "in_loc",
+									"value": "dhgvcdhgv",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.88.252:3001/insert_attendance",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"88",
+								"252"
+							],
+							"port": "3001",
+							"path": [
+								"insert_attendance"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Attendance list get 2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "user_id",
+									"value": "SG3tedEg0DinvrAlEGBGFlT9Y",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://192.168.88.252:3001/attendance_list",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"88",
+								"252"
+							],
+							"port": "3001",
+							"path": [
+								"attendance_list"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Test",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://119.148.40.180:3001/test",
+					"protocol": "http",
+					"host": [
+						"119",
+						"148",
+						"40",
+						"180"
+					],
+					"port": "3001",
+					"path": [
+						"test"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
