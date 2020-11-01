@@ -1,51 +1,120 @@
 const express = require("express");
 const db = require("../Connection/db");
 const router = express.Router();
-const today = new Date().toISOString().slice(0, 19).replace("T", " ");
+ const today = new Date().toISOString().slice(0, 19).replace("T", " ");
+
 const empty = "";
 let helper = require("../Helper/helper");
+
+
+
+
+console.log(today);
+
+
+
+
 
 // Task insert
 router.post("/insert_attendance", function (req, res) {
   let user_id = req.body.user_id;
   let com_code = req.body.com_code;
-  let in_time = req.body.in_time;
   let in_loc = req.body.in_loc;
-  sql =
-    "INSERT INTO attendance (user_id, com_code, in_time, in_loc, out_time,out_loc, create_date) VALUES ('" +
-    user_id +
-    "', '" +
-    com_code +
-    "','" +
-    in_time +
-    "','" +
-    in_loc +
-    "','" +
-    today +
-    "','" +
-    empty +
-    "','" +
-    today +
-    "')";
 
-  db.query(sql, function (err, result) {
-    if (!err) {
-      res.send({
-        result: true,
-        msg: "Attendance Inserted successfully",
-      });
-    } else {
-      res.send({
-        result: false,
-        msg: "Attendance Insertion failed",
-        error: err,
-      });
+  db.query(
+    "SELECT * FROM attendance WHERE user_id = ?  AND out_loc = ? AND DATE(create_date) = ?",
+    [req.body.user_id, empty, helper.formatDate(today)],
+    (err, rows, fields) => {
+      if (!err) {
+        if (rows.length > 0) {
+          var sql =
+            "UPDATE attendance SET out_time = '" +
+            today +
+            "', out_loc = '" +
+            in_loc +
+            "' WHERE user_id = '" +
+            user_id +
+            "' AND id = '" +
+            rows[0].id +
+            "'AND DATE(create_date) = '" +
+            helper.formatDate(today) +
+            "' ";
+          db.query(sql, function (err, result) {
+            if (!err) {
+              res.send({
+                result: true,
+                msg: "Attendance updated successfully",
+                data: [],
+              });
+            } else {
+              res.send({
+                result: false,
+                msg: "Attendance update Failed",
+                error: err,
+              });
+            }
+          });
+        } else {
+          sql =
+            "INSERT INTO attendance (user_id, com_code, in_time, in_loc, out_time,out_loc, create_date) VALUES ('" +
+            user_id +
+            "', '" +
+            com_code +
+            "','" +
+            today +
+            "','" +
+            in_loc +
+            "','" +
+            today +
+            "','" +
+            empty +
+            "','" +
+            today +
+            "')";
+
+          db.query(sql, function (err, result) {
+            if (!err) {
+              db.query(
+                "SELECT * FROM attendance WHERE user_id = ?  AND out_loc = ? AND DATE(create_date) = ?",
+                [req.body.user_id, empty, helper.formatDate(today)],
+                (err, rows, fields) => {
+                  if (!err) {
+                    res.send({
+                      result: true,
+                      msg: "Attendance Inserted successfully",
+                      data: rows[0],
+                    });
+                  } else {
+                    res.send({
+                      result: false,
+                      msg: "Sorry something went wrong",
+                      error: err,
+                    });
+                  }
+                }
+              );
+            } else {
+              res.send({
+                result: false,
+                msg: "Attendance Insertion failed",
+                error: err,
+              });
+            }
+          });
+        }
+      } else {
+        res.send({
+          result: false,
+          msg: "Sorry Something went wrong",
+          error: err,
+        });
+      }
     }
-  });
+  );
 });
 
 // Update Task Status
-router.put("/attendance_update", function (req, res) {
+router.post("/attendance_update", function (req, res) {
   let id = req.body.id;
   let user_id = req.body.user_id;
   let out_time = req.body.out_time;
@@ -60,7 +129,9 @@ router.put("/attendance_update", function (req, res) {
     user_id +
     "' AND id = '" +
     id +
-    "'AND DATE(create_date) = '"+helper.formatDate(today)+"' ";
+    "'AND DATE(create_date) = '" +
+    helper.formatDate(today) +
+    "' ";
   db.query(sql, function (err, result) {
     if (!err) {
       res.send({
@@ -77,35 +148,71 @@ router.put("/attendance_update", function (req, res) {
   });
 });
 
-
-
 // Get User Details
-router.post("/attendance_list", (req, res) => {
-
-    db.query(
-      "SELECT * FROM attendance WHERE user_id = ?  AND out_loc = ? AND DATE(create_date) = ?",
-      [req.body.user_id, empty, helper.formatDate(today)],
-      (err, rows, fields) => {
-        if (!err) {
+router.post("/get_attendance", (req, res) => {
+  db.query(
+    "SELECT * FROM attendance WHERE user_id = ?  AND out_loc = ? AND DATE(create_date) = ?",
+    [req.body.user_id, empty, helper.formatDate(today)],
+    (err, rows, fields) => {
+      if (!err) {
+        if (rows.length > 0) {
           res.send({
             result: true,
             msg: "Already Checked in",
-            data: rows,
+            data: rows[0],
           });
         } else {
           res.send({
             result: false,
             msg: "Not Checked in yet",
-            error: err,
           });
         }
+      } else {
+        res.send({
+          result: false,
+          msg: "Not Checked in yet",
+          error: err,
+        });
       }
-    );
-  });
-  
+    }
+  );
+});
 
+// Get all assigned deals
+router.post("/attendance_list", (req, res) => {
+  //Inner join Examples
+  // https://www.mysqltutorial.org/mysql-inner-join.aspx/
 
+  var date = helper.formatDate(new Date());
+  console.log(date);
 
-
+  db.query(
+    "SELECT * FROM attendance WHERE user_id = ? AND create_date >= ? ORDER BY  out_time  DESC LIMIT 2",
+    [req.body.user_id, date],
+    (err, rows, fields) => {
+      if (!err) {
+        if (rows.length > 0) {
+          res.send({
+            result: true,
+            msg: "Attendance Found",
+            data: rows,
+          });
+        } else {
+          res.send({
+            result: false,
+            msg: "No attendance data Found",
+            data: rows,
+          });
+        }
+      } else {
+        res.send({
+          result: false,
+          msg: "Sorry something went wrong",
+          error: err,
+        });
+      }
+    }
+  );
+});
 
 module.exports = router;
