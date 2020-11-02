@@ -1,7 +1,7 @@
 const express = require("express");
 const db = require("../Connection/db");
 const router = express.Router();
-const today = new Date().toISOString().slice(0, 19).replace('T', ' ');
+
 const empty = "";
 let helper = require("../Helper/helper");
 
@@ -18,7 +18,8 @@ router.post("/create_company_temp", function (req, res) {
   let com_type = req.body.com_type;
   let com_contact_person = req.body.com_contact_person;
 
-
+  const today = new Date().toISOString().slice(0, 19).replace("T", " ");
+ 
   let com_code = helper.makeid(15);
 
   sql =

@@ -1,7 +1,6 @@
 const express = require("express");
 const db = require("../Connection/db");
 const router = express.Router();
-const today = new Date().toISOString().slice(0, 19).replace("T", " ");
 const empty = "";
 let helper = require("../Helper/helper");
 
@@ -11,7 +10,8 @@ router.post("/assign_deal", function (req, res) {
   let deal_code = req.body.deal_code;
   let assigned_by = req.body.assigned_by;
   let assigned_to = req.body.assigned_to;
-
+  const today = new Date().toISOString().slice(0, 19).replace("T", " ");
+ 
   db.query(
     "SELECT COUNT(*) FROM deal_assignment WHERE deal_code = ?",
     [deal_code],
@@ -109,6 +109,8 @@ router.post("/assign_deal_list_deal_code", (req, res) => {
 router.post("/assigned_deals_list", (req, res) => {
   //Inner join Examples
   // https://www.mysqltutorial.org/mysql-inner-join.aspx/
+  const today = new Date().toISOString().slice(0, 19).replace("T", " ");
+ 
 
   db.query(
     "SELECT * FROM deal_assignment INNER JOIN deal_info USING (deal_code) WHERE assigned_to = ? ",

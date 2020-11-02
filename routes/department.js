@@ -1,7 +1,6 @@
 const express = require("express");
 const db = require("../Connection/db");
 const router = express.Router();
-const today = new Date().toISOString().slice(0, 19).replace("T", " ");
 const empty = "";
 let helper = require("../Helper/helper");
 
@@ -11,6 +10,8 @@ let helper = require("../Helper/helper");
 router.post("/create_dept", function (req, res) {
   let dept_name = req.body.dept_name;
   let dept_code = helper.makeid(15);
+  const today = new Date().toISOString().slice(0, 19).replace("T", " ");
+ 
 
   sql =
     "INSERT INTO dept_info (dept_code, dept_name, create_date, update_date) VALUES ('" +
@@ -41,6 +42,9 @@ router.post("/create_dept", function (req, res) {
 
 // Get All Users
 router.get("/all_dept", (req, res) => {
+  const today = new Date().toISOString().slice(0, 19).replace("T", " ");
+ 
+
   db.query("SELECT * FROM dept_info", (err, rows, fields) => {
     if (!err) {
       res.send({

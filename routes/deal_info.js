@@ -1,7 +1,7 @@
 const express = require("express");
 const db = require("../Connection/db");
 const router = express.Router();
-const today = new Date().toISOString().slice(0, 19).replace("T", " ");
+
 const empty = "";
 let helper = require("../Helper/helper");
 
@@ -16,6 +16,8 @@ router.post("/create_deal", function (req, res) {
   let deal_owner = req.body.deal_owner;
   let com_code = req.body.com_code;
 
+  const today = new Date().toISOString().slice(0, 19).replace("T", " ");
+ 
   let deal_code = helper.makeid(15);
 
   sql =
@@ -157,7 +159,8 @@ router.put("/deal_update", function (req, res) {
   let deal_progress = req.body.deal_progress;
   let deal_type = req.body.deal_type;
   let deal_code = req.body.deal_code;
-
+  const today = new Date().toISOString().slice(0, 19).replace("T", " ");
+ 
   var sql =
     "UPDATE deal_info SET deal_name = '" +
     deal_name +
@@ -196,6 +199,8 @@ router.put("/deal_update", function (req, res) {
 router.put("/deal_progress_update", function (req, res) {
   let deal_progress = req.body.deal_progress;
   let deal_code = req.body.deal_code;
+  const today = new Date().toISOString().slice(0, 19).replace("T", " ");
+ 
   var sql =
     "UPDATE deal_info SET deal_progress = '" +
     deal_progress +
@@ -224,6 +229,8 @@ router.put("/deal_progress_update", function (req, res) {
 router.put("/deal_stage_update", function (req, res) {
   let deal_stage = req.body.deal_stage;
   let deal_code = req.body.deal_code;
+  const today = new Date().toISOString().slice(0, 19).replace("T", " ");
+ 
   var sql =
     "UPDATE deal_info SET deal_stage = '" +
     deal_stage +
@@ -254,6 +261,10 @@ router.put("/deal_stage_update", function (req, res) {
 router.post("/mydeal_list", (req, res) => {
   //Inner join Examples
   // https://www.mysqltutorial.org/mysql-inner-join.aspx/
+  const today = new Date().toISOString().slice(0, 19).replace("T", " ");
+ 
+
+  
   db.query(
     "SELECT * FROM deal_assignment INNER JOIN deal_info USING (deal_code) WHERE assigned_to = ?",
     [req.body.user_id],

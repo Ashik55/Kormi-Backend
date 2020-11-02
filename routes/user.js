@@ -2,7 +2,6 @@ const express = require("express");
 const db = require("../Connection/db");
 const router = express.Router();
 let helper = require("../Helper/helper");
-const today = new Date().toISOString().slice(0, 19).replace("T", " ");
 const empty = "";
 
 
@@ -13,6 +12,8 @@ router.post("/registration", function (req, res) {
   let app_key = req.body.app_key;
   let user_email = req.body.user_email;
   let user_id = helper.makeid(25);
+  const today = new Date().toISOString().slice(0, 19).replace("T", " ");
+ 
 
   db.query(
     'SELECT app_key FROM user_info WHERE app_key ="' + app_key + '"',
@@ -121,6 +122,8 @@ router.post("/registration", function (req, res) {
 
 // Get User Details
 router.post("/user_details", (req, res) => {
+  const today = new Date().toISOString().slice(0, 19).replace("T", " ");
+ 
   db.query(
     "SELECT * FROM user_info WHERE user_id = ?",
     [req.body.user_id],
@@ -191,6 +194,10 @@ router.post("/userlist_samecom", (req, res) => {
 });
 
 
+
+
+
+
 // Get All Users
 router.get("/users", (req, res) => {
   db.query("SELECT * FROM user_info", (err, rows, fields) => {
@@ -214,6 +221,8 @@ router.get("/users", (req, res) => {
 router.put("/user_name_update", function (req, res) {
   let user_name = req.body.user_name;
   let user_id = req.body.user_id;
+  const today = new Date().toISOString().slice(0, 19).replace("T", " ");
+ 
 
   var sql =
     "UPDATE user_info SET user_name = '" +
@@ -243,6 +252,8 @@ router.put("/user_name_update", function (req, res) {
 router.put("/user_number_update", function (req, res) {
   let user_number = req.body.user_number;
   let user_id = req.body.user_id;
+  const today = new Date().toISOString().slice(0, 19).replace("T", " ");
+ 
 
   var sql =
     "UPDATE user_info SET user_number = '" +
@@ -273,6 +284,8 @@ router.put("/user_com_update", function (req, res) {
   let com_code = req.body.com_code;
   let com_name = req.body.com_name;
   let user_id = req.body.user_id;
+  const today = new Date().toISOString().slice(0, 19).replace("T", " ");
+ 
 
   var sql =
     "UPDATE user_info SET com_code = '" +
@@ -305,6 +318,8 @@ router.put("/user_dept_update", function (req, res) {
   let dept_code = req.body.dept_code;
   let dept_name = req.body.dept_name;
   let user_id = req.body.user_id;
+  const today = new Date().toISOString().slice(0, 19).replace("T", " ");
+ 
 
   var sql =
     "UPDATE user_info SET dept_code = '" +
@@ -337,6 +352,8 @@ router.put("/user_home_update", function (req, res) {
   let address_home = req.body.address_home;
   let home_latlong = req.body.home_latlong;
   let user_id = req.body.user_id;
+  const today = new Date().toISOString().slice(0, 19).replace("T", " ");
+ 
 
   var sql =
     "UPDATE user_info SET address_home = '" +
@@ -369,6 +386,8 @@ router.put("/user_office_update", function (req, res) {
   let address_office = req.body.address_office;
   let office_latlong = req.body.office_latlong;
   let user_id = req.body.user_id;
+  const today = new Date().toISOString().slice(0, 19).replace("T", " ");
+ 
 
   var sql =
     "UPDATE user_info SET address_office = '" +

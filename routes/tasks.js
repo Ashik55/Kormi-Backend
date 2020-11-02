@@ -1,7 +1,6 @@
 const express = require("express");
 const db = require("../Connection/db");
 const router = express.Router();
-const today = new Date().toISOString().slice(0, 19).replace("T", " ");
 const empty = "";
 let helper = require("../Helper/helper");
 
@@ -14,6 +13,8 @@ router.post("/create_task", function (req, res) {
   let task_owner = req.body.task_owner;
   let link_name = req.body.link_name;
   let task_code = helper.makeid(15);
+  const today = new Date().toISOString().slice(0, 19).replace("T", " ");
+ 
 
   sql =
     "INSERT INTO tasks (task_code, task_title, task_type, task_date, queue_code,task_owner,status, create_date,update_date ) VALUES ('" +
@@ -80,6 +81,8 @@ router.post("/create_task", function (req, res) {
 
 // Get All Task
 router.get("/tasks", (req, res) => {
+  const today = new Date().toISOString().slice(0, 19).replace("T", " ");
+ 
   db.query("SELECT * FROM tasks", (err, rows, fields) => {
     if (!err) {
       res.send({
@@ -101,6 +104,8 @@ router.get("/tasks", (req, res) => {
 router.post("/task_list", (req, res) => {
   //Inner join Examples
   // https://www.mysqltutorial.org/mysql-inner-join.aspx/
+  const today = new Date().toISOString().slice(0, 19).replace("T", " ");
+ 
   db.query(
     "SELECT * FROM tasks INNER JOIN tasks_details USING (task_code) WHERE link_code = ?",
     [req.body.link_code],
@@ -128,6 +133,8 @@ router.post("/task_list", (req, res) => {
 router.post("/upcoming_task", (req, res) => {
   //Inner join Examples
   // https://www.mysqltutorial.org/mysql-inner-join.aspx/
+  const today = new Date().toISOString().slice(0, 19).replace("T", " ");
+ 
 
   var date = helper.formatDate(new Date());
   console.log(date);
@@ -157,6 +164,8 @@ router.post("/upcoming_task", (req, res) => {
 router.post("/tasks_user_list", (req, res) => {
   //Inner join Examples
   // https://www.mysqltutorial.org/mysql-inner-join.aspx/
+  const today = new Date().toISOString().slice(0, 19).replace("T", " ");
+ 
   db.query(
     "SELECT * FROM tasks_details INNER JOIN tasks USING (task_code) WHERE task_code = ?",
     [req.body.task_code],
@@ -180,6 +189,8 @@ router.post("/tasks_user_list", (req, res) => {
 
 // Get User Details
 router.post("/task_details", (req, res) => {
+  const today = new Date().toISOString().slice(0, 19).replace("T", " ");
+ 
   db.query(
     "SELECT * FROM tasks WHERE task_code = ?",
     [req.body.task_code],
@@ -203,6 +214,8 @@ router.post("/task_details", (req, res) => {
 
 // Get User Details
 router.post("/task_list_user", (req, res) => {
+  const today = new Date().toISOString().slice(0, 19).replace("T", " ");
+ 
   db.query(
     "SELECT * FROM tasks WHERE task_owner = ?",
     [req.body.task_owner],
@@ -228,6 +241,8 @@ router.post("/task_list_user", (req, res) => {
 router.put("/task_status_update", function (req, res) {
   let task_code = req.body.task_code;
   let status = req.body.status;
+  const today = new Date().toISOString().slice(0, 19).replace("T", " ");
+ 
   var sql =
     "UPDATE tasks SET status = '" +
     status +
@@ -256,6 +271,8 @@ router.put("/task_status_update", function (req, res) {
 router.delete("/delete_task", function (req, res) {
   let task_code = req.body.task_code;
   let task_owner = req.body.task_owner;
+  const today = new Date().toISOString().slice(0, 19).replace("T", " ");
+ 
 
   mQuery =
     "DELETE FROM tasks WHERE task_code = '" +
@@ -294,6 +311,8 @@ router.post("/task_details_add", function (req, res) {
   let link_code = req.body.link_code;
   let link_type = req.body.link_type;
   let link_name = req.body.link_name;
+  const today = new Date().toISOString().slice(0, 19).replace("T", " ");
+ 
 
   sql =
     "INSERT INTO tasks_details (task_code, link_code, link_type, link_name, create_date,update_date ) VALUES ('" +

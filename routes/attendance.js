@@ -1,18 +1,8 @@
 const express = require("express");
 const db = require("../Connection/db");
 const router = express.Router();
- const today = new Date().toISOString().slice(0, 19).replace("T", " ");
-
 const empty = "";
 let helper = require("../Helper/helper");
-
-
-
-
-console.log(today);
-
-
-
 
 
 // Task insert
@@ -20,6 +10,12 @@ router.post("/insert_attendance", function (req, res) {
   let user_id = req.body.user_id;
   let com_code = req.body.com_code;
   let in_loc = req.body.in_loc;
+
+  const today = new Date().toISOString().slice(0, 19).replace("T", " ");
+  console.log(today);
+ 
+  
+
 
   db.query(
     "SELECT * FROM attendance WHERE user_id = ?  AND out_loc = ? AND DATE(create_date) = ?",
@@ -120,6 +116,11 @@ router.post("/attendance_update", function (req, res) {
   let out_time = req.body.out_time;
   let out_loc = req.body.out_loc;
 
+  const today = new Date().toISOString().slice(0, 19).replace("T", " ");
+  console.log(today);
+
+
+
   var sql =
     "UPDATE attendance SET out_time = '" +
     out_time +
@@ -150,6 +151,11 @@ router.post("/attendance_update", function (req, res) {
 
 // Get User Details
 router.post("/get_attendance", (req, res) => {
+
+
+  const today = new Date().toISOString().slice(0, 19).replace("T", " ");
+  console.log(today);
+
   db.query(
     "SELECT * FROM attendance WHERE user_id = ?  AND out_loc = ? AND DATE(create_date) = ?",
     [req.body.user_id, empty, helper.formatDate(today)],
@@ -183,8 +189,13 @@ router.post("/attendance_list", (req, res) => {
   //Inner join Examples
   // https://www.mysqltutorial.org/mysql-inner-join.aspx/
 
-  var date = helper.formatDate(new Date());
+
+  const today = new Date().toISOString().slice(0, 19).replace("T", " ");
+  console.log(today);
+  var date = helper.formatDate(today);
   console.log(date);
+
+
 
   db.query(
     "SELECT * FROM attendance WHERE user_id = ? AND create_date >= ? ORDER BY  out_time  DESC LIMIT 2",

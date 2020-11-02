@@ -1,7 +1,6 @@
 const express = require("express");
 const db = require("../Connection/db");
 const router = express.Router();
-const today = new Date().toISOString().slice(0, 19).replace("T", " ");
 const empty = "";
 let helper = require("../Helper/helper");
 
