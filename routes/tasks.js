@@ -14,7 +14,6 @@ router.post("/create_task", function (req, res) {
   let link_name = req.body.link_name;
   let task_code = helper.makeid(15);
   const today = new Date().toISOString().slice(0, 19).replace("T", " ");
- 
 
   sql =
     "INSERT INTO tasks (task_code, task_title, task_type, task_date, queue_code,task_owner,status, create_date,update_date ) VALUES ('" +
@@ -82,7 +81,7 @@ router.post("/create_task", function (req, res) {
 // Get All Task
 router.get("/tasks", (req, res) => {
   const today = new Date().toISOString().slice(0, 19).replace("T", " ");
- 
+
   db.query("SELECT * FROM tasks", (err, rows, fields) => {
     if (!err) {
       res.send({
@@ -105,7 +104,7 @@ router.post("/task_list", (req, res) => {
   //Inner join Examples
   // https://www.mysqltutorial.org/mysql-inner-join.aspx/
   const today = new Date().toISOString().slice(0, 19).replace("T", " ");
- 
+
   db.query(
     "SELECT * FROM tasks INNER JOIN tasks_details USING (task_code) WHERE link_code = ?",
     [req.body.link_code],
@@ -127,14 +126,11 @@ router.post("/task_list", (req, res) => {
   );
 });
 
-
-
 // Get all assigned deals
 router.post("/upcoming_task", (req, res) => {
   //Inner join Examples
   // https://www.mysqltutorial.org/mysql-inner-join.aspx/
   const today = new Date().toISOString().slice(0, 19).replace("T", " ");
- 
 
   var date = helper.formatDate(new Date());
   console.log(date);
@@ -165,7 +161,7 @@ router.post("/tasks_user_list", (req, res) => {
   //Inner join Examples
   // https://www.mysqltutorial.org/mysql-inner-join.aspx/
   const today = new Date().toISOString().slice(0, 19).replace("T", " ");
- 
+
   db.query(
     "SELECT * FROM tasks_details INNER JOIN tasks USING (task_code) WHERE task_code = ?",
     [req.body.task_code],
@@ -190,7 +186,7 @@ router.post("/tasks_user_list", (req, res) => {
 // Get User Details
 router.post("/task_details", (req, res) => {
   const today = new Date().toISOString().slice(0, 19).replace("T", " ");
- 
+
   db.query(
     "SELECT * FROM tasks WHERE task_code = ?",
     [req.body.task_code],
@@ -215,7 +211,7 @@ router.post("/task_details", (req, res) => {
 // Get User Details
 router.post("/task_list_user", (req, res) => {
   const today = new Date().toISOString().slice(0, 19).replace("T", " ");
- 
+
   db.query(
     "SELECT * FROM tasks WHERE task_owner = ?",
     [req.body.task_owner],
@@ -242,7 +238,7 @@ router.put("/task_status_update", function (req, res) {
   let task_code = req.body.task_code;
   let status = req.body.status;
   const today = new Date().toISOString().slice(0, 19).replace("T", " ");
- 
+
   var sql =
     "UPDATE tasks SET status = '" +
     status +
@@ -272,7 +268,6 @@ router.delete("/delete_task", function (req, res) {
   let task_code = req.body.task_code;
   let task_owner = req.body.task_owner;
   const today = new Date().toISOString().slice(0, 19).replace("T", " ");
- 
 
   mQuery =
     "DELETE FROM tasks WHERE task_code = '" +
@@ -305,6 +300,43 @@ router.delete("/delete_task", function (req, res) {
   });
 });
 
+// Delete Task
+router.post("/delete_task_user", function (req, res) {
+  let link_code = req.body.link_code;
+  let task_code = req.body.task_code;
+  const today = new Date().toISOString().slice(0, 19).replace("T", " ");
+
+  mQuery =
+    "DELETE FROM tasks_details WHERE link_code = '" +
+    link_code +
+    "' AND task_code = '" +
+    task_code +
+    "' ";
+
+  db.query(mQuery, function (err, result) {
+    if (!err) {
+      if (result["affectedRows"] > 0) {
+        res.send({
+          result: true,
+          msg: "Task's user deleted successfully",
+          res: result,
+        });
+      } else {
+        res.send({
+          result: false,
+          msg: "user not found",
+          res: result,
+        });
+      }
+    } else {
+      res.send({
+        result: false,
+        msg: "Sorry something went wrong, task deletion failed",
+      });
+    }
+  });
+});
+
 // Task insert
 router.post("/task_details_add", function (req, res) {
   let task_code = req.body.task_code;
@@ -312,36 +344,60 @@ router.post("/task_details_add", function (req, res) {
   let link_type = req.body.link_type;
   let link_name = req.body.link_name;
   const today = new Date().toISOString().slice(0, 19).replace("T", " ");
- 
 
-  sql =
-    "INSERT INTO tasks_details (task_code, link_code, link_type, link_name, create_date,update_date ) VALUES ('" +
-    task_code +
-    "', '" +
-    link_code +
-    "','" +
-    link_type +
-    "','" +
-    link_name +
-    "','" +
-    today +
-    "','" +
-    today +
-    "')";
-  db.query(sql, function (err, result) {
-    if (!err) {
-      res.send({
-        result: true,
-        msg: "Task assigned successfully",
-      });
-    } else {
-      res.send({
-        result: false,
-        msg: "Task assign failed",
-        error: err,
-      });
+  db.query(
+    "SELECT * FROM tasks_details WHERE task_code = ? AND link_code = ?",
+    [task_code, link_code],
+    (err, rows, fields) => {
+      if (!err) {
+        if (rows.length > 0) {
+          res.send({
+            result: true,
+            assign: false,
+            msg: "Tasks Found",
+            data: rows,
+          });
+        } else {
+          sql =
+            "INSERT INTO tasks_details (task_code, link_code, link_type, link_name, create_date,update_date ) VALUES ('" +
+            task_code +
+            "', '" +
+            link_code +
+            "','" +
+            link_type +
+            "','" +
+            link_name +
+            "','" +
+            today +
+            "','" +
+            today +
+            "')";
+          db.query(sql, function (err, result) {
+            if (!err) {
+              res.send({
+                assign: true,
+                msg: "Task user assigned successfully",
+              });
+            } else {
+              res.send({
+                result: false,
+                assign: false,
+                msg: "Task user assign failed",
+                error: err,
+              });
+            }
+          });
+        }
+      } else {
+        res.send({
+          result: false,
+          assign: false,
+          msg: "Sorry Something went wrong",
+          error: err,
+        });
+      }
     }
-  });
+  );
 });
 
 module.exports = router;
