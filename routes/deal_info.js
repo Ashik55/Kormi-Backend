@@ -15,6 +15,7 @@ router.post("/create_deal", function (req, res) {
   let deal_type = req.body.deal_type;
   let deal_owner = req.body.deal_owner;
   let com_code = req.body.com_code;
+  let assigned_to_name = req.body.assigned_to_name;
 
   const today = new Date().toISOString().slice(0, 19).replace("T", " ");
  
@@ -46,7 +47,7 @@ router.post("/create_deal", function (req, res) {
   db.query(sql, function (err, result) {
     if (!err) {
       sql2 =
-        "INSERT INTO deal_assignment (com_code, deal_code, assigned_by, assigned_to, assignment_serial,create_date ) VALUES ('" +
+        "INSERT INTO deal_assignment (com_code, deal_code, assigned_by, assigned_to,assigned_to_name, assignment_serial,create_date ) VALUES ('" +
         com_code +
         "', '" +
         deal_code +
@@ -54,6 +55,8 @@ router.post("/create_deal", function (req, res) {
         deal_owner +
         "','" +
         deal_owner +
+        "','" +
+        assigned_to_name +
         "','" +
         "1" +
         "','" +

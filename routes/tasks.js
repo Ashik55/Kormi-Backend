@@ -400,4 +400,44 @@ router.post("/task_details_add", function (req, res) {
   );
 });
 
+//Task Updateee
+router.put("/task_details_update", function (req, res) {
+  let task_code = req.body.task_code;
+  let task_title = req.body.task_title;
+  let task_type = req.body.task_type;
+  let task_date = req.body.task_date;
+  let status = req.body.status;
+
+  const today = new Date().toISOString().slice(0, 19).replace("T", " ");
+
+  var sql =
+    "UPDATE tasks SET status = '" +
+    status +
+    "',task_title = '" +
+    task_title +
+    "',task_type = '" +
+    task_type +
+    "',task_date = '" +
+    task_date +
+    "', update_date = '" +
+    today +
+    "' WHERE task_code = '" +
+    task_code +
+    "'";
+  db.query(sql, function (err, result) {
+    if (!err) {
+      res.send({
+        result: true,
+        msg: "Task updated successfully",
+      });
+    } else {
+      res.send({
+        result: false,
+        msg: "Task update Failed",
+        error: err,
+      });
+    }
+  });
+});
+
 module.exports = router;

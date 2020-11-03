@@ -10,6 +10,7 @@ router.post("/assign_deal", function (req, res) {
   let deal_code = req.body.deal_code;
   let assigned_by = req.body.assigned_by;
   let assigned_to = req.body.assigned_to;
+  let assigned_to_name = req.body.assigned_to_name;
   const today = new Date().toISOString().slice(0, 19).replace("T", " ");
  
   db.query(
@@ -21,8 +22,25 @@ router.post("/assign_deal", function (req, res) {
         var count = x["COUNT(*)"];
         assignment_serial = count + 1;
 
-        sql =
-          "INSERT INTO deal_assignment (com_code, deal_code, assigned_by, assigned_to, assignment_serial,create_date ) VALUES ('" +
+
+
+        
+  db.query(
+    "SELECT * FROM deal_assignment WHERE deal_code = ? AND assigned_to = ?",
+    [deal_code, assigned_to],
+    (err, rows, fields) => {
+      if (!err) {
+        if (rows.length > 0) {
+          res.send({
+            result: true,
+            assign: false,
+            msg: "Tasks Found",
+            data: rows,
+          });
+        } else {
+
+          sql =
+          "INSERT INTO deal_assignment (com_code, deal_code, assigned_by, assigned_to, assigned_to_name, assignment_serial,create_date ) VALUES ('" +
           com_code +
           "', '" +
           deal_code +
@@ -30,6 +48,8 @@ router.post("/assign_deal", function (req, res) {
           assigned_by +
           "','" +
           assigned_to +
+          "','" +
+          assigned_to_name +
           "','" +
           assignment_serial +
           "','" +
@@ -40,16 +60,36 @@ router.post("/assign_deal", function (req, res) {
           if (!err) {
             res.send({
               result: true,
+              assign:true,
               msg: "Deal Assigned successfully",
             });
           } else {
             res.send({
               result: false,
+              assign:false,
               msg: "Deal assign failed",
               error: err,
             });
           }
         });
+
+   
+        }
+      } else {
+        res.send({
+          result: false,
+          assign: false,
+          msg: "Sorry Something went wrong",
+          error: err,
+        });
+      }
+    }
+  );
+
+
+
+
+        
       } else {
         res.send({
           result: false,
@@ -83,7 +123,7 @@ router.get("/all_assigned_deals", (req, res) => {
 // Get User of same Deal
 router.post("/assign_deal_list_deal_code", (req, res) => {
   db.query(
-    "SELECT * FROM deal_assignment WHERE deal_code = ?",
+    "SELECT * FROM deal_assignment WHERE deal_code = ?  AND NOT (assigned_to = assigned_by)",
     [req.body.deal_code],
     (err, rows, fields) => {
       if (!err) {
@@ -181,5 +221,48 @@ router.get("/assign_deal_list_deal_code_count", (req, res) => {
     }
   );
 });
+
+
+
+
+// Delete Task
+router.post("/delete_deal_user", function (req, res) {
+  let deal_code = req.body.deal_code;
+  let assigned_to = req.body.assigned_to;
+  const today = new Date().toISOString().slice(0, 19).replace("T", " ");
+
+  mQuery =
+    "DELETE FROM deal_assignment WHERE deal_code = '" +
+    deal_code +
+    "' AND assigned_to = '" +
+    assigned_to +
+    "' ";
+
+  db.query(mQuery, function (err, result) {
+    if (!err) {
+      if (result["affectedRows"] > 0) {
+        res.send({
+          result: true,
+          msg: "Deal's user deleted successfully",
+          res: result,
+        });
+      } else {
+        res.send({
+          result: false,
+          msg: "user not found",
+          res: result,
+        });
+      }
+    } else {
+      res.send({
+        result: false,
+        msg: "Sorry something went wrong, task deletion failed",
+      });
+    }
+  });
+});
+
+
+
 
 module.exports = router;
