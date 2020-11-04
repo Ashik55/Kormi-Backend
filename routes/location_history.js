@@ -10,6 +10,8 @@ router.post("/location_history_insert", function (req, res) {
   let user_id = req.body.user_id;
   let user_latlong = req.body.user_latlong;
 
+  const today = new Date().toISOString().slice(0, 19).replace("T", " ");
+
   sql =
     "INSERT INTO location_history (com_code, user_id, user_latlong, create_date, update_date ) VALUES ('" +
     com_code +
@@ -41,6 +43,7 @@ router.post("/location_history_insert", function (req, res) {
 
 // Get All Users
 router.get("/location_histories", (req, res) => {
+  const today = new Date().toISOString().slice(0, 19).replace("T", " ");
   db.query("SELECT * FROM location_history", (err, rows, fields) => {
     if (!err) {
       res.send({
@@ -60,7 +63,7 @@ router.get("/location_histories", (req, res) => {
 
 // Get User Details
 router.post("/location_list", (req, res) => {
-
+  const today = new Date().toISOString().slice(0, 19).replace("T", " ");
   db.query(
     "SELECT * FROM location_history WHERE user_id = ? AND DATE(create_date) = ?",
     [req.body.user_id, req.body.date],
