@@ -111,17 +111,26 @@ router.get("/all_deals", (req, res) => {
 });
 
 // Get User Details
-router.get("/deal_details", (req, res) => {
+router.post("/deal_details", (req, res) => {
   db.query(
     "SELECT * FROM deal_info WHERE deal_code = ?",
     [req.body.deal_code],
     (err, rows, fields) => {
       if (!err) {
-        res.send({
-          result: true,
-          msg: "Deal Found",
-          data: rows,
-        });
+        if (rows.length > 0) {
+          res.send({
+            result: true,
+            msg: "Deal Found",
+            data: rows[0],
+          });
+        } else {
+
+          res.send({
+            result: false,
+            msg: "Deals Not Found",
+            data: [],
+          });
+        }
       } else {
         res.send({
           result: false,

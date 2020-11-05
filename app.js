@@ -68,6 +68,9 @@ app.use("/", tasksRouter);
 const attendanceRouter = require("./routes/attendance");
 app.use("/", attendanceRouter);
 
+const commentRouter = require("./routes/comment");
+app.use("/", commentRouter);
+
 
 
 app.get('/test', function(req ,res){
