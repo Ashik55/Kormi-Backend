@@ -29,11 +29,33 @@ router.post("/create_comment", function (req, res) {
     "')";
   db.query(sql, function (err, result) {
     if (!err) {
-        res.send({
-            result: true,
-            comment_code : comment_code,
-            msg: "Comment added successfully",
-          });
+      db.query(
+        "SELECT  `id`,`deal_code`,`comment_code`,`comment`,`user_id`,`user_name` FROM comment WHERE comment_code = ?",
+        [comment_code],
+        (err, rows, fields) => {
+          if (!err) {
+            if (rows.length > 0) {
+              res.send({
+                result: true,
+                msg: "Comment added successfully",
+                data: rows[0],
+              });
+            } else {
+              res.send({
+                result: false,
+                msg: "Comments Not Found",
+                data: [],
+              });
+            }
+          } else {
+            res.send({
+              result: false,
+              msg: "Sorry something went wrong",
+              error: err,
+            });
+          }
+        }
+      );
     } else {
       res.send({
         result: false,
@@ -43,7 +65,6 @@ router.post("/create_comment", function (req, res) {
     }
   });
 });
-
 
 // Get comments
 router.post("/comments", (req, res) => {
@@ -59,7 +80,6 @@ router.post("/comments", (req, res) => {
             data: rows,
           });
         } else {
-
           res.send({
             result: false,
             msg: "Comments Not Found",
@@ -77,77 +97,79 @@ router.post("/comments", (req, res) => {
   );
 });
 
-
-
 // Registration new Deal
 router.post("/create_comment_child", function (req, res) {
-    let comment_code = req.body.comment_code;
-    let comment_text = req.body.comment_text;
-    let user_id = req.body.user_id;
-    let user_name = req.body.user_name;
-    const today = new Date().toISOString().slice(0, 19).replace("T", " ");
-    sql =
-      "INSERT INTO comment_child (comment_code, comment_text, user_id, user_name, create_date ) VALUES ('" +
-      comment_code +
-      "', '" +
-      comment_text +
-      "','" +
-      user_id +
-      "','" +
-      user_name +
-      "','" +
-      today +
-      "')";
-    db.query(sql, function (err, result) {
-      if (!err) {
-          res.send({
-              result: true,
-              msg: "Comment chiled added successfully",
-            });
-      } else {
-        res.send({
-          result: false,
-          msg: "Comment chiled addition failed",
-          error: err,
-        });
-      }
-    });
+  let comment_code = req.body.comment_code;
+  let comment_text = req.body.comment_text;
+  let user_id = req.body.user_id;
+  let user_name = req.body.user_name;
+  const today = new Date().toISOString().slice(0, 19).replace("T", " ");
+  sql =
+    "INSERT INTO comment_child (comment_code, comment_text, user_id, user_name, create_date ) VALUES ('" +
+    comment_code +
+    "', '" +
+    comment_text +
+    "','" +
+    user_id +
+    "','" +
+    user_name +
+    "','" +
+    today +
+    "')";
+  db.query(sql, function (err, result) {
+    if (!err) {
+      res.send({
+        result: true,
+        msg: "Comment chiled added successfully",
+        data: {
+          id: 1,
+          deal_code: "",
+          comment_code: comment_code,
+          comment: comment_text,
+          user_id: user_id,
+          user_name: user_name,
+        },
+      });
+    } else {
+      res.send({
+        result: false,
+        msg: "Comment chiled addition failed",
+        error: err,
+      });
+    }
   });
-  
-  
-  // Get User Details
-  router.post("/comments", (req, res) => {
-    db.query(
-      "SELECT * FROM comment_child WHERE comment_code = ?",
-      [req.body.comment_code],
-      (err, rows, fields) => {
-        if (!err) {
-          if (rows.length > 0) {
-            res.send({
-              result: true,
-              msg: "Comments child Found",
-              data: rows,
-            });
-          } else {
-  
-            res.send({
-              result: false,
-              msg: "Comments child Not Found",
-              data: [],
-            });
-          }
+});
+
+// Get User Details
+router.post("/comments", (req, res) => {
+  db.query(
+    "SELECT * FROM comment_child WHERE comment_code = ?",
+    [req.body.comment_code],
+    (err, rows, fields) => {
+      if (!err) {
+        if (rows.length > 0) {
+          res.send({
+            result: true,
+            msg: "Comments child Found",
+            data: rows,
+          });
         } else {
           res.send({
             result: false,
-            msg: "Sorry something went wrong",
-            error: err,
+            msg: "Comments child Not Found",
+            data: [],
           });
         }
+      } else {
+        res.send({
+          result: false,
+          msg: "Sorry something went wrong",
+          error: err,
+        });
       }
-    );
-  });
-  
-  
+    }
+  );
+});
 
 // Get all assigned deals
 router.post("/comment_list", (req, res) => {
@@ -171,11 +193,5 @@ router.post("/comment_list", (req, res) => {
     }
   );
 });
-
-
-
-
-
-
 
 module.exports = router;
