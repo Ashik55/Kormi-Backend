@@ -8,6 +8,7 @@ let helper = require("../Helper/helper");
 // Registration new Deal
 router.post("/create_deal", function (req, res) {
   let deal_name = req.body.deal_name;
+  let deal_desc = req.body.deal_desc;
   let deal_amount = req.body.deal_amount;
   let deal_stage = req.body.deal_stage;
   let deal_close_date = req.body.deal_close_date;
@@ -18,14 +19,16 @@ router.post("/create_deal", function (req, res) {
   let assigned_to_name = req.body.assigned_to_name;
 
   const today = new Date().toISOString().slice(0, 19).replace("T", " ");
- 
+
   let deal_code = helper.makeid(15);
 
   sql =
-    "INSERT INTO deal_info (deal_code, deal_name, deal_amount, deal_stage, deal_close_date,deal_progress,deal_type,deal_owner, create_date,update_date ) VALUES ('" +
+    "INSERT INTO deal_info (deal_code, deal_name,deal_desc, deal_amount, deal_stage, deal_close_date,deal_progress,deal_type,deal_owner, create_date,update_date ) VALUES ('" +
     deal_code +
     "', '" +
     deal_name +
+    "','" +
+    deal_desc +
     "','" +
     deal_amount +
     "','" +
@@ -156,6 +159,7 @@ router.get("/deal_list", (req, res) => {
 // Update userNAme
 router.put("/deal_update", function (req, res) {
   let deal_name = req.body.deal_name;
+  let deal_desc = req.body.deal_desc;
   let deal_amount = req.body.deal_amount;
   let deal_stage = req.body.deal_stage;
   let deal_close_date = req.body.deal_close_date;
@@ -163,10 +167,12 @@ router.put("/deal_update", function (req, res) {
   let deal_type = req.body.deal_type;
   let deal_code = req.body.deal_code;
   const today = new Date().toISOString().slice(0, 19).replace("T", " ");
- 
+
   var sql =
     "UPDATE deal_info SET deal_name = '" +
     deal_name +
+    "',deal_desc = '" +
+    deal_desc +
     "',deal_amount = '" +
     deal_amount +
     "',deal_stage = '" +
@@ -203,7 +209,7 @@ router.put("/deal_progress_update", function (req, res) {
   let deal_progress = req.body.deal_progress;
   let deal_code = req.body.deal_code;
   const today = new Date().toISOString().slice(0, 19).replace("T", " ");
- 
+
   var sql =
     "UPDATE deal_info SET deal_progress = '" +
     deal_progress +
@@ -233,7 +239,7 @@ router.put("/deal_stage_update", function (req, res) {
   let deal_stage = req.body.deal_stage;
   let deal_code = req.body.deal_code;
   const today = new Date().toISOString().slice(0, 19).replace("T", " ");
- 
+
   var sql =
     "UPDATE deal_info SET deal_stage = '" +
     deal_stage +
@@ -258,16 +264,12 @@ router.put("/deal_stage_update", function (req, res) {
   });
 });
 
-
-
 // Get all assigned deals
 router.post("/mydeal_list", (req, res) => {
   //Inner join Examples
   // https://www.mysqltutorial.org/mysql-inner-join.aspx/
   const today = new Date().toISOString().slice(0, 19).replace("T", " ");
- 
 
-  
   db.query(
     "SELECT * FROM deal_assignment INNER JOIN deal_info USING (deal_code) WHERE assigned_to = ?",
     [req.body.user_id],
@@ -288,8 +290,5 @@ router.post("/mydeal_list", (req, res) => {
     }
   );
 });
-
-
-
 
 module.exports = router;
