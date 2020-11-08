@@ -1,95 +1,13 @@
-const mysql = require("mysql");
 const express = require("express");
 const app = express();
-var bodyParser = require("body-parser");
-var nodemailer = require("nodemailer");
-const fileUpload = require("express-fileupload");
-const cors = require("cors");
-const morgan = require("morgan");
-const _ = require("lodash");
-var multer, storage, path, crypto;
-multer = require("multer");
-path = require("path");
-crypto = require("crypto");
+const db = require("../Connection/db");
+const router = express.Router();
+const empty = "";
+let helper = require("../Helper/helper");
+
+//newww
 var http = require("http").Server(app);
 var io = require("socket.io")(http);
-
-const db = require("./Connection/db");
-const empty = "";
-let helper = require("./Helper/helper");
-
-
-const today = new Date().toISOString();
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json({ type: "application/*+json" }));
-
-
-// enable files upload
-app.use(
-  fileUpload({
-    createParentPath: true,
-  })
-);
-
-
-//add other middleware
-app.use(cors());
-app.use(bodyParser.json());
-app.use(morgan("dev"));
-app.use(express.static("uploads"));
-// app.listen(3001);
-
-
-
-
-
-//Connecting all Routesss
-
-const userRoute = require("./routes/user");
-app.use("/", userRoute);
-
-const companyRoute = require("./routes/company_central");
-app.use("/", companyRoute);
-
-const companyTempRoute = require("./routes/company_temp");
-app.use("/", companyTempRoute);
-
-const departmentRoutes = require("./routes/department");
-app.use("/", departmentRoutes);
-
-const LocationHistoryRoutes = require("./routes/location_history");
-app.use("/", LocationHistoryRoutes);
-
-const DealInfoRoute = require("./routes/deal_info");
-app.use("/", DealInfoRoute);
-
-const DealAssignmentRoute = require("./routes/deal_assignment");
-app.use("/", DealAssignmentRoute);
-
-const tasksRouter = require("./routes/tasks");
-app.use("/", tasksRouter);
-
-const attendanceRouter = require("./routes/attendance");
-app.use("/", attendanceRouter);
-
-const commentRouter = require("./routes/comment");
-app.use("/", commentRouter);
-
-
-// const socketCommentRouter = require("./routes/socketComments");
-// app.use("/", socketCommentRouter);
-
-
-
-app.get('/test', function(req ,res){
-    res.send('ashik '+ today);
-});
-
-
-
-//Sockettt
 
 io.on("connection", function (socket) {
   console.log("A user is connected");
@@ -142,7 +60,7 @@ var root_comment = function (commentObj, callback) {
     "', '" +
     commentObj.comment +
     "','" +
-    comment_code +
+    commentObj.comment_code +
     "','" +
     commentObj.user_id +
     "','" +
@@ -183,7 +101,7 @@ var child_Comment = function (commentObj, callback) {
     "INSERT INTO comment_child (comment_code, comment_text, user_id, user_name, create_date ) VALUES ('" +
     commentObj.comment_code +
     "', '" +
-    commentObj.comment +
+    commentObj.comment_text +
     "','" +
     commentObj.user_id +
     "','" +
@@ -205,8 +123,4 @@ var child_Comment = function (commentObj, callback) {
 
 
 
-
-http.listen(3001, function () {
-  console.log("Listening on 3001");
-});
-
+module.exports = router;
