@@ -97,7 +97,7 @@ router.post("/comments", (req, res) => {
   );
 });
 
-// Registration new Deal
+// Child Comment
 router.post("/create_comment_child", function (req, res) {
   let comment_code = req.body.comment_code;
   let comment_text = req.body.comment_text;
