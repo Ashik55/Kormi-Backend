@@ -23,7 +23,7 @@ router.post("/create_company_temp", function (req, res) {
   let com_code = helper.makeid(15);
 
   sql =
-    "INSERT INTO company_info (com_code, com_name, com_address, com_latlong, user_ref_id,com_mobile, com_email,com_size,com_type, com_contact_person, create_date, update_date) VALUES ('" +
+    "INSERT INTO company_temp (com_code, com_name, com_address, com_latlong, user_ref_id,com_mobile, com_email,com_size,com_type, com_contact_person) VALUES ('" +
     com_code +
     "', '" +
     com_name +
@@ -43,10 +43,6 @@ router.post("/create_company_temp", function (req, res) {
     com_type +
     "','" +
     com_contact_person +
-    "','" +
-    today +
-    "','" +
-    today +
     "')";
 
   db.query(sql, function (err, result) {

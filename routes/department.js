@@ -14,14 +14,10 @@ router.post("/create_dept", function (req, res) {
  
 
   sql =
-    "INSERT INTO dept_info (dept_code, dept_name, create_date, update_date) VALUES ('" +
+    "INSERT INTO dept_info (dept_code, dept_name) VALUES ('" +
     dept_code +
     "', '" +
     dept_name +
-    "','" +
-    today +
-    "','" +
-    today +
     "')";
 
   db.query(sql, function (err, result) {

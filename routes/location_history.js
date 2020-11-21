@@ -13,16 +13,12 @@ router.post("/location_history_insert", function (req, res) {
   const today = new Date().toISOString().slice(0, 19).replace("T", " ");
 
   sql =
-    "INSERT INTO location_history (com_code, user_id, user_latlong, create_date, update_date ) VALUES ('" +
+    "INSERT INTO location_history (com_code, user_id, user_latlong) VALUES ('" +
     com_code +
     "', '" +
     user_id +
     "','" +
     user_latlong +
-    "','" +
-    today +
-    "','" +
-    today +
     "')";
 
   db.query(sql, function (err, result) {
