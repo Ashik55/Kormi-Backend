@@ -194,6 +194,33 @@ router.post("/userlist_samecom", (req, res) => {
 });
 
 
+// Get User of same companies
+router.post("/com_user", (req, res) => {
+  db.query(
+    "SELECT * FROM user_info WHERE com_code = ?",
+    [req.body.com_code, req.body.user_id],
+    (err, rows, fields) => {
+      if (!err) {
+        res.send({
+          result: true,
+          msg: "User Details Found",
+          data: rows,
+        });
+      } else {
+        res.send({
+          result: false,
+          msg: "Sorry something went wrong",
+          error: err,
+        });
+      }
+    }
+  );
+});
+
+
+
+
+
 
 
 
