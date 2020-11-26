@@ -43,43 +43,50 @@ app.use(express.static("uploads"));
 
 
 
+app.get("/web", function (req, res) {
+  res.sendFile(__dirname + "/index.html");
+});
+
+
 
 
 //Connecting all Routesss
 
-const userRoute = require("./routes/user");
-app.use("/", userRoute);
+const adminRouter = require("./Routes/adminLogin");
+app.use("/", adminRouter);
 
-const companyRoute = require("./routes/company_central");
-app.use("/", companyRoute);
 
-const companyTempRoute = require("./routes/company_temp");
-app.use("/", companyTempRoute);
-
-const departmentRoutes = require("./routes/department");
-app.use("/", departmentRoutes);
-
-const LocationHistoryRoutes = require("./routes/location_history");
-app.use("/", LocationHistoryRoutes);
-
-const DealInfoRoute = require("./routes/deal_info");
-app.use("/", DealInfoRoute);
-
-const DealAssignmentRoute = require("./routes/deal_assignment");
-app.use("/", DealAssignmentRoute);
-
-const tasksRouter = require("./routes/tasks");
-app.use("/", tasksRouter);
-
-const attendanceRouter = require("./routes/attendance");
+const attendanceRouter = require("./Routes/attendance");
 app.use("/", attendanceRouter);
 
-const commentRouter = require("./routes/comment");
+const userRoute = require("./Routes/user");
+app.use("/", userRoute);
+
+const companyRoute = require("./Routes/company_central");
+app.use("/", companyRoute);
+
+const companyTempRoute = require("./Routes/company_temp");
+app.use("/", companyTempRoute);
+
+const departmentRoutes = require("./Routes/department");
+app.use("/", departmentRoutes);
+
+const LocationHistoryRoutes = require("./Routes/location_history");
+app.use("/", LocationHistoryRoutes);
+
+const DealInfoRoute = require("./Routes/deal_info");
+app.use("/", DealInfoRoute);
+
+const DealAssignmentRoute = require("./Routes/deal_assignment");
+app.use("/", DealAssignmentRoute);
+
+const tasksRouter = require("./Routes/tasks");
+app.use("/", tasksRouter);
+
+
+const commentRouter = require("./Routes/comment");
 app.use("/", commentRouter);
 
-
-// const socketCommentRouter = require("./routes/socketComments");
-// app.use("/", socketCommentRouter);
 
 
 
@@ -131,13 +138,17 @@ io.on("connection", function (socket) {
       }
     });
   });
+  
+  
 });
+
+
 
 var root_comment = function (commentObj, callback) {
   const today = new Date().toISOString().slice(0, 19).replace("T", " ");
   let comment_code = helper.makeid(20);
   sql =
-    "INSERT INTO comment (deal_code, comment,comment_code, user_id, user_name, create_date ) VALUES ('" +
+    "INSERT INTO comment (deal_code, comment,comment_code, user_id, user_name ) VALUES ('" +
     commentObj.deal_code +
     "', '" +
     commentObj.comment +
@@ -147,8 +158,6 @@ var root_comment = function (commentObj, callback) {
     commentObj.user_id +
     "','" +
     commentObj.user_name +
-    "','" +
-    today +
     "')";
   db.query(sql, function (err, result) {
     if (!err) {
@@ -180,7 +189,7 @@ var root_comment = function (commentObj, callback) {
 var child_Comment = function (commentObj, callback) {
   const today = new Date().toISOString().slice(0, 19).replace("T", " ");
   sql =
-    "INSERT INTO comment_child (comment_code, comment_text, user_id, user_name, create_date ) VALUES ('" +
+    "INSERT INTO comment_child (comment_code, comment_text, user_id, user_name) VALUES ('" +
     commentObj.comment_code +
     "', '" +
     commentObj.comment +
@@ -188,8 +197,6 @@ var child_Comment = function (commentObj, callback) {
     commentObj.user_id +
     "','" +
     commentObj.user_name +
-    "','" +
-    today +
     "')";
   db.query(sql, function (err, result) {
     if (!err) {
@@ -201,6 +208,9 @@ var child_Comment = function (commentObj, callback) {
     }
   });
 };
+
+
+
 
 
 
