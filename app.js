@@ -55,6 +55,9 @@ app.get("/web", function (req, res) {
 const adminRouter = require("./Routes/adminLogin");
 app.use("/", adminRouter);
 
+const emptreeRouter = require("./Routes/emp_tree");
+app.use("/", emptreeRouter);
+
 
 const attendanceRouter = require("./Routes/attendance");
 app.use("/", attendanceRouter);
