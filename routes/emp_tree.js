@@ -9,7 +9,7 @@ router.post("/insert_emp_tree", function (req, res) {
   let com_code = req.body.com_code;
   let user_id = req.body.user_id;
   let user_name = req.body.user_name;
-  let child_id = req.body.child_id;
+  let parent_id = req.body.parent_id;
 
   db.query(
     "SELECT * FROM emp_tree WHERE com_code = '" + com_code + "' ",
@@ -28,26 +28,26 @@ router.post("/insert_emp_tree", function (req, res) {
         db.query(mQuery, function (err, result) {
           if (!err) {
             sql =
-              "INSERT INTO emp_tree (com_code, user_id,user_name,child_id ) VALUES ('" +
+              "INSERT INTO emp_tree (com_code, user_id,user_name, parent_id ) VALUES ('" +
               com_code +
               "', '" +
               user_id +
               "', '" +
               user_name +
               "', '" +
-              child_id +
+              parent_id +
               "')";
 
             db.query(sql, function (err, result) {
               if (!err) {
                 res.send({
                   result: true,
-                  msg: "Child added successfully",
+                  msg: "data added successfully",
                 });
               } else {
                 res.send({
                   result: false,
-                  msg: "DChild add failed",
+                  msg: "Data add failed",
                   error: err,
                 });
               }
@@ -61,11 +61,30 @@ router.post("/insert_emp_tree", function (req, res) {
           }
         });
       } else {
-        res.send({
-          result: false,
-          msg: "Sorry no Employee found with com_code " + com_code,
-          error: err,
-          rows: rows,
+        sql =
+          "INSERT INTO emp_tree (com_code, user_id,user_name, parent_id ) VALUES ('" +
+          com_code +
+          "', '" +
+          user_id +
+          "', '" +
+          user_name +
+          "', '" +
+          parent_id +
+          "')";
+
+        db.query(sql, function (err, result) {
+          if (!err) {
+            res.send({
+              result: true,
+              msg: "data added successfully",
+            });
+          } else {
+            res.send({
+              result: false,
+              msg: "Data add failed",
+              error: err,
+            });
+          }
         });
       }
     }
@@ -97,10 +116,10 @@ router.post("/get_emp_tree", function (req, res) {
         });
       } else {
         res.send({
-          result: false,
-          msg: "Sorry no Employee found with com_code " + com_code,
+          result: true,
+          msg: "Sorry no previous data found for com_code " + com_code,
           error: err,
-          rows: rows,
+          data: rows,
         });
       }
     }
