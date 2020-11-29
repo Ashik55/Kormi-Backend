@@ -22,44 +22,6 @@ router.post("/insert_emp_tree", function (req, res) {
           data: rows,
           error: err,
         });
-      } else if (rows.length > 0) {
-        //Data Available in Emplyee table
-        mQuery = "DELETE FROM emp_tree WHERE com_code = '" + com_code + "' ";
-        db.query(mQuery, function (err, result) {
-          if (!err) {
-            sql =
-              "INSERT INTO emp_tree (com_code, user_id,user_name, parent_id ) VALUES ('" +
-              com_code +
-              "', '" +
-              user_id +
-              "', '" +
-              user_name +
-              "', '" +
-              parent_id +
-              "')";
-
-            db.query(sql, function (err, result) {
-              if (!err) {
-                res.send({
-                  result: true,
-                  msg: "data added successfully",
-                });
-              } else {
-                res.send({
-                  result: false,
-                  msg: "Data add failed",
-                  error: err,
-                });
-              }
-            });
-          } else {
-            res.send({
-              result: false,
-              msg: "Employee tree delete failed",
-              error: err,
-            });
-          }
-        });
       } else {
         sql =
           "INSERT INTO emp_tree (com_code, user_id,user_name, parent_id ) VALUES ('" +
@@ -89,6 +51,27 @@ router.post("/insert_emp_tree", function (req, res) {
       }
     }
   );
+});
+
+// Create New Department
+router.post("/delete_old_tree", function (req, res) {
+  let com_code = req.body.com_code;
+  mQuery = "DELETE FROM emp_tree WHERE com_code = '" + com_code + "' ";
+  db.query(mQuery, function (err, result) {
+    if (!err) {
+      res.send({
+        result: true,
+        msg: "Employee tree deleted successfully",
+        error: err,
+      });
+    } else {
+      res.send({
+        result: false,
+        msg: "Employee tree delete failed",
+        error: err,
+      });
+    }
+  });
 });
 
 // Create New Department
