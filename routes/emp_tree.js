@@ -109,8 +109,48 @@ router.post("/get_emp_tree", function (req, res) {
   );
 });
 
+
+
 // Recursive Employee Tree
-router.get("/get_child", function (req, res) {
+router.post("/get_child", function (req, res) {
+  let user_id = req.body.user_id;
+  db.query(
+    "SELECT t1.user_id AS lev1, t2.user_id as lev2, t3.user_id as lev3, t4.user_id as lev4 FROM emp_tree AS t1 LEFT JOIN emp_tree AS t2 ON t2.parent_id = t1.user_id LEFT JOIN emp_tree AS t3 ON t3.parent_id = t2.user_id LEFT JOIN emp_tree AS t4 ON t4.parent_id = t3.user_id WHERE t1.user_id = '" + user_id + "'  ",
+    (err, rows, fields) => {
+      if (err) {
+        console.log(err);
+        res.send({
+          result: false,
+          msg: "Sorry something went wrong check Error",
+          data: rows,
+          error: err,
+        });
+      } else if (rows.length > 0) {
+        //Data Available in Emplyee table
+
+        res.send({
+          result: true,
+          msg: "Employee Tree Found",
+          data: rows,
+        });
+      } else {
+        res.send({
+          result: true,
+          msg: "Sorry no previous data found for com_code " + com_code,
+          error: err,
+          data: rows,
+        });
+      }
+    }
+  );
+});
+
+
+
+
+
+// Recursive Employee Tree
+router.get("/get_child2", function (req, res) {
   db.query(
     "SELECT t1.name AS lev1, t2.name as lev2, t3.name as lev3, t4.name as lev4 FROM category AS t1 LEFT JOIN category AS t2 ON t2.parent = t1.category_id LEFT JOIN category AS t3 ON t3.parent = t2.category_id LEFT JOIN category AS t4 ON t4.parent = t3.category_id WHERE t1.name = 'ELECTRONICS' ",
     (err, rows, fields) => {
@@ -141,6 +181,10 @@ router.get("/get_child", function (req, res) {
     }
   );
 });
+
+
+
+
 
 
 
