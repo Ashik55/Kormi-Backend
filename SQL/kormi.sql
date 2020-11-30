@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 26, 2020 at 04:36 AM
+-- Generation Time: Nov 30, 2020 at 10:00 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.4.1
 
@@ -70,6 +70,34 @@ INSERT INTO `attendance` (`id`, `user_id`, `com_code`, `in_time`, `in_loc`, `out
 (2, 'a20', 'c1', '2020-11-21 06:07:14', 'dhgvcdhgv', '2020-11-21 06:07:20', 'dhgvcdhgv', '2020-11-21 06:07:14'),
 (3, 'a20', 'c1', '2020-11-21 06:07:49', 'dhgvcdhgv', '2020-11-21 06:07:50', 'dhgvcdhgv', '2020-11-21 06:07:49'),
 (4, 'YFNUDd5vJPiOS8LrQPs9pM2ok', 'SACMBx7Zt5MEmWX', '2020-11-21 06:27:18', 'LatLng(23.8021587, 90.37067030000003)', NULL, '', '2020-11-21 06:27:18');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `category`
+--
+
+CREATE TABLE `category` (
+  `category_id` int(11) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `parent` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`category_id`, `name`, `parent`) VALUES
+(1, 'ELECTRONICS', NULL),
+(2, 'TELEVISIONS', 1),
+(3, 'TUBE', 1),
+(4, 'LCD', 2),
+(5, 'PLASMA', 2),
+(6, 'PORTABLE ELECTRONICS', 1),
+(7, 'MP3 PLAYERS', 1),
+(8, 'FLASH', 7),
+(9, 'CD PLAYERS', 6),
+(10, '2 WAY RADIOS', 6);
 
 -- --------------------------------------------------------
 
@@ -244,6 +272,29 @@ INSERT INTO `dept_info` (`id`, `dept_code`, `dept_name`, `create_date`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `emp_tree`
+--
+
+CREATE TABLE `emp_tree` (
+  `id` int(11) NOT NULL,
+  `com_code` text NOT NULL,
+  `user_id` text NOT NULL,
+  `user_name` text NOT NULL,
+  `parent_id` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `emp_tree`
+--
+
+INSERT INTO `emp_tree` (`id`, `com_code`, `user_id`, `user_name`, `parent_id`) VALUES
+(10, 'SACMBx7Zt5MEmWX', 'TAm39o0l4GslcUG4QDycCZh7I', 'Mēhēdī Hāsāna', 'root'),
+(11, 'SACMBx7Zt5MEmWX', 'tnUZWYnjx6KGyxbWLxJ5Fhl1n', 'Ashikur Rahman', 'TAm39o0l4GslcUG4QDycCZh7I'),
+(12, 'SACMBx7Zt5MEmWX', '1y1ZVOmOr4WpqhE7Rxn8oBs32', 'Aashiqur Rahman', 'tnUZWYnjx6KGyxbWLxJ5Fhl1n');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `location_history`
 --
 
@@ -311,6 +362,52 @@ INSERT INTO `tasks_details` (`id`, `task_code`, `link_code`, `link_type`, `link_
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tree_adj`
+--
+
+CREATE TABLE `tree_adj` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `parent_id` int(10) UNSIGNED DEFAULT NULL,
+  `title` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tree_adj`
+--
+
+INSERT INTO `tree_adj` (`id`, `parent_id`, `title`) VALUES
+(1, NULL, ''),
+(2, 1, 'bin'),
+(3, 1, 'etc'),
+(4, 1, 'home'),
+(5, 1, 'tmp'),
+(6, 1, 'usr'),
+(7, 1, 'var'),
+(8, 3, 'apache2'),
+(9, 3, 'apt'),
+(10, 3, 'mysql'),
+(11, 8, 'conf-available'),
+(12, 8, 'mods-available'),
+(13, 8, 'sites-available'),
+(14, 4, 'roland'),
+(15, 4, 'albert'),
+(16, 6, 'bin'),
+(17, 6, 'src'),
+(18, 6, 'share'),
+(19, 7, 'backups'),
+(20, 7, 'cache'),
+(21, 7, 'www'),
+(22, 21, 'project1'),
+(23, 22, 'app'),
+(24, 22, 'log'),
+(25, 22, 'vendor'),
+(26, 22, 'public'),
+(27, 25, 'bin'),
+(28, 25, 'composer');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user_info`
 --
 
@@ -358,6 +455,12 @@ ALTER TABLE `attendance`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `category`
+--
+ALTER TABLE `category`
+  ADD PRIMARY KEY (`category_id`);
+
+--
 -- Indexes for table `comment`
 --
 ALTER TABLE `comment`
@@ -400,6 +503,12 @@ ALTER TABLE `dept_info`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `emp_tree`
+--
+ALTER TABLE `emp_tree`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `location_history`
 --
 ALTER TABLE `location_history`
@@ -416,6 +525,13 @@ ALTER TABLE `tasks`
 --
 ALTER TABLE `tasks_details`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tree_adj`
+--
+ALTER TABLE `tree_adj`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `parent_id` (`parent_id`);
 
 --
 -- Indexes for table `user_info`
@@ -440,10 +556,16 @@ ALTER TABLE `attendance`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `category`
+--
+ALTER TABLE `category`
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
 -- AUTO_INCREMENT for table `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `comment_child`
@@ -479,6 +601,12 @@ ALTER TABLE `deal_info`
 -- AUTO_INCREMENT for table `dept_info`
 --
 ALTER TABLE `dept_info`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `emp_tree`
+--
+ALTER TABLE `emp_tree`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
@@ -500,10 +628,26 @@ ALTER TABLE `tasks_details`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `tree_adj`
+--
+ALTER TABLE `tree_adj`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+
+--
 -- AUTO_INCREMENT for table `user_info`
 --
 ALTER TABLE `user_info`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `tree_adj`
+--
+ALTER TABLE `tree_adj`
+  ADD CONSTRAINT `tree_adj_ibfk_1` FOREIGN KEY (`parent_id`) REFERENCES `tree_adj` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
