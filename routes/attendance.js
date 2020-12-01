@@ -103,43 +103,6 @@ router.post("/insert_attendance", function (req, res) {
   );
 });
 
-// Update Task Status
-router.post("/attendance_update", function (req, res) {
-  let id = req.body.id;
-  let user_id = req.body.user_id;
-  let out_time = req.body.out_time;
-  let out_loc = req.body.out_loc;
-
-  const today = new Date().toISOString().slice(0, 19).replace("T", " ");
-  console.log(today);
-
-  var sql =
-    "UPDATE attendance SET out_time = '" +
-    out_time +
-    "', out_loc = '" +
-    out_loc +
-    "' WHERE user_id = '" +
-    user_id +
-    "' AND id = '" +
-    id +
-    "'AND DATE(create_date) = '" +
-    helper.formatDate(today) +
-    "' ";
-  db.query(sql, function (err, result) {
-    if (!err) {
-      res.send({
-        result: true,
-        msg: "Attendance updated successfully",
-      });
-    } else {
-      res.send({
-        result: false,
-        msg: "Attendance update Failed",
-        error: err,
-      });
-    }
-  });
-});
 
 // Get User Details
 router.post("/get_attendance", (req, res) => {
@@ -212,5 +175,41 @@ router.post("/attendance_list", (req, res) => {
     }
   );
 });
+
+
+// Get all assigned deals
+router.post("/attendance_list_full", (req, res) => {
+  db.query(
+    "SELECT * FROM attendance WHERE user_id = ? AND create_date >= ? ORDER BY  out_time  DESC",
+    [req.body.user_id, req.body.date],
+    (err, rows, fields) => {
+      if (!err) {
+        if (rows.length > 0) {
+          res.send({
+            result: true,
+            msg: "Attendance Found",
+            data: rows,
+          });
+        } else {
+          res.send({
+            result: false,
+            msg: "No attendance data Found",
+            data: rows,
+          });
+        }
+      } else {
+        res.send({
+          result: false,
+          msg: "Sorry something went wrong",
+          error: err,
+        });
+      }
+    }
+  );
+});
+
+
+
+
 
 module.exports = router;
