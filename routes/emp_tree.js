@@ -136,7 +136,7 @@ router.post("/get_child", function (req, res) {
       } else {
         res.send({
           result: true,
-          msg: "Sorry no previous data found for com_code " + com_code,
+          msg: "Sorry no previous data found" ,
           error: err,
           data: rows,
         });
